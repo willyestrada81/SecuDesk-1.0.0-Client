@@ -1,63 +1,62 @@
-import React, { useContext } from "react";
-import { Redirect } from "react-router-dom";
-import { Container, Row, Col, Card, CardHeader, CardBody } from "shards-react";
+import React, { useContext } from 'react'
+import { Redirect } from 'react-router-dom'
+import { Container, Row, Col, Card, CardHeader, CardBody } from 'shards-react'
 
-import { AuthContext } from "../context/auth";
-import PageTitle from "../components/common/PageTitle";
-import Table from "../components/common/Table";
+import { AuthContext } from '../context/auth'
+import PageTitle from '../components/common/PageTitle'
+import Table from '../components/common/Table'
 
-function TenantsSearchResult(props) {
-  const { user } = useContext(AuthContext);
+function TenantsSearchResult (props) {
+  const { user } = useContext(AuthContext)
 
   const { data } = props.location.state
   const columns = [
-    "Resident",
-    "First Name",
-    "Last Name",
-    "Apartment #",
-    "Resident Since",
-    "Phone",
-    "Total of Incidents",
-    "Add New Incident"
-  ];
+    'Resident',
+    'First Name',
+    'Last Name',
+    'Apartment #',
+    'Resident Since',
+    'Phone',
+    'Total of Incidents',
+    'Add New Incident'
+  ]
 
   if (user) {
     return (
-      <Container fluid className="main-content-container px-4">
+      <Container fluid className='main-content-container px-4'>
         {/* Page Header */}
-        <Row noGutters className="page-header py-4">
+        <Row noGutters className='page-header py-4'>
           <PageTitle
-            sm="4"
-            title="Search Results"
-            subtitle="Residents"
-            className="text-sm-left"
+            sm='4'
+            title='Search Results'
+            subtitle='Residents'
+            className='text-sm-left'
           />
         </Row>
         <Row>
           <Col>
-            <Card small className="mb-4">
-              <CardHeader className="border-bottom">
+            <Card small className='mb-4'>
+              <CardHeader className='border-bottom'>
                 <Row>
                   <Col>
-                    <h6 className="m-0">{ typeof data !== 'undefined' && data.searchTenants.length} Resident(s) Found</h6>
+                    <h6 className='m-0'>{typeof data !== 'undefined' && data.searchTenants.length} Resident(s) Found</h6>
                   </Col>
-                  <Col>
-                  </Col>
+                  <Col />
                 </Row>
               </CardHeader>
-              <CardBody className="p-0 pb-3">
-              {
-                  data && <Table tenants={data.searchTenants} columns={columns}  />
+              <CardBody className='p-0 pb-3'>
+                {
+                  data && <Table data={data.searchTenants} columns={columns} />
                 }
               </CardBody>
             </Card>
           </Col>
         </Row>
       </Container>
-    );
+    )
   } else {
-    return <Redirect to="/login" />;
+    return <Redirect to='/login' />
   }
 }
 
-export default TenantsSearchResult;
+export default TenantsSearchResult

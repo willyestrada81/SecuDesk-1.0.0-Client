@@ -1,61 +1,61 @@
-import React, { useState } from "react";
-import { Button, Modal, Form, Spinner, Alert } from "react-bootstrap";
-import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+import React, { useState } from 'react'
+import { Button, Modal, Form, Spinner, Alert } from 'react-bootstrap'
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
 
-export default function UploadFileModal(props) {
-  const [show, setShow] = useState(false);
+export default function UploadFileModal (props) {
+  const [show, setShow] = useState(false)
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
 
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState('')
 
-  const [employeePhoto, setEmployeePhoto] = useState("");
+  const [employeePhoto, setEmployeePhoto] = useState('')
 
   const [submitFiles, { loading, error }] = useMutation(UPLOAD_FILE, {
     variables: {
-      file: file,
+      file: file
     },
-    onError(err) {
-      console.log(err);
+    onError (err) {
+      console.log(err)
     },
-    onCompleted(data) {
+    onCompleted (data) {
       if (data) {
-        setEmployeePhoto(data.singleUpload.location);
-        updateEmployeePhoto();
+        setEmployeePhoto(data.singleUpload.location)
+        updateEmployeePhoto()
       }
-    },
-  });
+    }
+  })
 
-  let message;
+  let message
   if (error) {
     message = (
-      <Alert key="message" variant="danger" className="mt-4">
+      <Alert key='message' variant='danger' className='mt-4'>
         Something went wrong, please try again!
       </Alert>
-    );
+    )
   }
   const [updateEmployeePhoto] = useMutation(UPDATE_EMPLOYEE, {
     variables: {
       employeeId: props.employeeId,
-      RegisterEmployeeInput: { employee_profilePhoto: employeePhoto },
+      RegisterEmployeeInput: { employeeProfilePhoto: employeePhoto }
     },
-    onError(err) {
-      console.log(err.networkError);
+    onError (err) {
+      console.log(err.networkError)
     },
-    onCompleted() {
-      handleClose();
-    },
-  });
+    onCompleted () {
+      handleClose()
+    }
+  })
 
   const submitFileToUpload = () => {
-    submitFiles();
-  };
+    submitFiles()
+  }
 
   return (
     <>
-      <Button variant="outline-info" onClick={handleShow}>
+      <Button variant='outline-info' onClick={handleShow}>
         Change Photo
       </Button>
 
@@ -66,44 +66,44 @@ export default function UploadFileModal(props) {
         <Modal.Body>
           <Form noValidate>
             <Form.File
-              name={"document"}
-              type={"file"}
+              name='document'
+              type='file'
               onChange={({ target: { files } }) => {
-                setFile(files[0]);
+                setFile(files[0])
               }}
             />
           </Form>
           {message}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant='secondary' onClick={handleClose}>
             Close
           </Button>
           <Button
-            theme="accent"
-            type="submit"
+            theme='accent'
+            type='submit'
             disabled={!file}
             onClick={(e) => {
-              e.preventDefault();
-              submitFileToUpload();
+              e.preventDefault()
+              submitFileToUpload()
             }}
           >
             {loading ? (
               <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
+                as='span'
+                animation='border'
+                size='sm'
+                role='status'
+                aria-hidden='true'
               />
             ) : (
-              "Upload"
+              'Upload'
             )}
           </Button>
         </Modal.Footer>
       </Modal>
     </>
-  );
+  )
 }
 
 const UPLOAD_FILE = gql`
@@ -115,7 +115,7 @@ const UPLOAD_FILE = gql`
       location
     }
   }
-`;
+`
 
 const UPDATE_EMPLOYEE = gql`
   mutation updateEmployee(
@@ -129,4 +129,4 @@ const UPDATE_EMPLOYEE = gql`
       firstName
     }
   }
-`;
+`

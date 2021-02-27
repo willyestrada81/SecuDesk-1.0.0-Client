@@ -1,53 +1,35 @@
-import React, { useContext } from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import { Container, Navbar } from "shards-react";
+import React, { useContext } from 'react'
+import classNames from 'classnames'
+import { Container, Navbar } from 'shards-react'
 
-import { AuthContext } from "../../../context/auth";
-import NavbarSearch from "./NavbarSearch";
-import NavbarNav from "./NavbarNav/NavbarNav";
-import NavbarToggle from "./NavbarToggle";
+import { AuthContext } from '../../../context/auth'
+import NavbarSearch from './NavbarSearch'
+import NavbarActions from './NavbarActions'
 
 const MainNavbar = () => {
   const classes = classNames(
-    "main-navbar",
-    "bg-white"
-  );
+    'main-navbar',
+    'bg-white'
+  )
 
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext)
 
   if (user) {
     return (
       <div className={classes}>
-        <Container className="p-0">
-          <Navbar type="light" className="align-items-stretch flex-md-nowrap p-0">
+        <Container className='p-0'>
+          <Navbar type='light' className='align-items-stretch flex-md-nowrap p-0'>
             <NavbarSearch />
-            <NavbarNav />
-            <NavbarToggle />
+            <NavbarActions />
           </Navbar>
         </Container>
       </div>
-    );
+    )
   } else {
     return (
-      <div></div>
+      <div />
     )
   }
-};
+}
 
-MainNavbar.propTypes = {
-  /**
-   * The layout type where the MainNavbar is used.
-   */
-  layout: PropTypes.string,
-  /**
-   * Whether the main navbar is sticky to the top, or not.
-   */
-  stickyTop: PropTypes.bool
-};
-
-MainNavbar.defaultProps = {
-  stickyTop: true
-};
-
-export default MainNavbar;
+export default MainNavbar

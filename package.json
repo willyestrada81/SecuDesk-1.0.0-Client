@@ -1,5 +1,5 @@
 {
-  "name": "shards-dashboard-lite-react",
+  "name": "secudesk-client-1.0.0",
   "version": "1.0.0",
   "private": true,
   "homepage": "./",
@@ -54,6 +54,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "standard": "^16.0.3"
   },
   "proxy": "https://pacific-bastion-23508.herokuapp.com/"
 }

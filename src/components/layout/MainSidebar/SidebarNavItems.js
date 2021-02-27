@@ -1,26 +1,37 @@
-import React, { useState } from "react";
-import { Nav } from "shards-react";
+import React from 'react'
+import { Nav } from 'shards-react'
 
-import SidebarNavItem from "./SidebarNavItem";
-import { Store } from "../../../flux";
+import SidebarNavItem from './SidebarNavItem'
 
 function SidebarNavItems () {
-
-  const [navItems, SetNavItems] = useState(Store.getSidebarItems());
-
-  // const onChange = () => {
-  //   SetNavItems(Store.getSidebarItems())
-  // }
+  const navItems = [
+    {
+      title: 'Dashboard',
+      to: '/',
+      htmlBefore: '<i class="material-icons">edit</i>',
+      htmlAfter: ''
+    },
+    {
+      title: 'Residents',
+      htmlBefore: '<i class="material-icons">apartment</i>',
+      to: '/tenants'
+    },
+    {
+      title: 'Packages',
+      htmlBefore: '<i class="material-icons">local_shipping</i>',
+      to: '/tenants'
+    }
+  ]
 
   return (
-      <div className="nav-wrapper">
-        <Nav className="nav--no-borders flex-column">
-          {navItems.map((item, idx) => (
-            <SidebarNavItem key={idx} item={item} />
-          ))}
-        </Nav>
-      </div>
-    )
+    <div className='nav-wrapper'>
+      <Nav className='nav--no-borders flex-column'>
+        {navItems.map((item, idx) => (
+          <SidebarNavItem key={idx} item={item} />
+        ))}
+      </Nav>
+    </div>
+  )
 }
 
-export default SidebarNavItems;
+export default SidebarNavItems
