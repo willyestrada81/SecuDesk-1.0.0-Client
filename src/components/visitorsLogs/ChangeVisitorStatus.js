@@ -1,8 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap'
 
-import { BAN_VISITOR, MAKE_PERMANENT, REMOVE_BANNED_VISITOR, REMOVE_PERMANENT_VISITOR } from '../../utils/graphql'
+import {
+  BAN_VISITOR,
+  MAKE_PERMANENT,
+  REMOVE_BANNED_VISITOR,
+  REMOVE_PERMANENT_VISITOR
+} from '../../utils/graphql'
+import { ToastMessageContext } from '../../context/toastMessage'
 
 export default function ChangeVisitorStatus ({
   tenantId,
@@ -10,6 +16,7 @@ export default function ChangeVisitorStatus ({
   bannedVisitors,
   permanentVisitors
 }) {
+  const { setMessage } = useContext(ToastMessageContext)
   const isBanned = bannedVisitors.find(visitor => visitor.visitorId === visitorId)
   const isPermanent = permanentVisitors.find(visitor => visitor.visitorId === visitorId)
 
@@ -26,6 +33,18 @@ export default function ChangeVisitorStatus ({
         : 'Regular'
   })
 
+  const handleSuccess = (message, variant, title) => {
+    setMessage({
+      message,
+      show: true,
+      isError: false
+    })
+    setButtonProps({
+      variant,
+      title
+    })
+  }
+
   const [submitBanVisitor] = useMutation(BAN_VISITOR, {
     variables: {
       tenantId,
@@ -35,10 +54,11 @@ export default function ChangeVisitorStatus ({
       console.log(error)
     },
     onCompleted () {
-      setButtonProps({
-        variant: 'danger',
-        title: 'Banned'
-      })
+      handleSuccess(
+        'Success. Visitor in now banned',
+        'danger',
+        'Banned'
+      )
     }
   })
 
@@ -51,10 +71,11 @@ export default function ChangeVisitorStatus ({
       console.log(error)
     },
     onCompleted () {
-      setButtonProps({
-        variant: 'success',
-        title: 'Permanent'
-      })
+      handleSuccess(
+        'Succsess. Visitor is now a permanent resident',
+        'succsess',
+        'Permanent'
+      )
     }
   })
 
@@ -67,10 +88,11 @@ export default function ChangeVisitorStatus ({
       console.log(error)
     },
     onCompleted () {
-      setButtonProps({
-        variant: 'primary',
-        title: 'Regular'
-      })
+      handleSuccess(
+        'Success. Visitor is not Banned anymore',
+        'primary',
+        'Regular'
+      )
     }
   })
 
@@ -83,20 +105,13 @@ export default function ChangeVisitorStatus ({
       console.log(error)
     },
     onCompleted () {
-      setButtonProps({
-        variant: 'primary',
-        title: 'Regular'
-      })
+      handleSuccess(
+        'Success. Visitor is not a permanent visitor anymore',
+        'primary',
+        'Regular'
+      )
     }
   })
-
-  // const banVisitor = () => {
-  //   submitBanVisitor()
-  // }
-
-  // const makePermanent = () => {
-  //   submitPermanentVisitor()
-  // }
 
   if (isBanned) {
     return (

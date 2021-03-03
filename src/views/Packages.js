@@ -5,39 +5,36 @@ import { Container, Row, Col, Card, Spinner } from 'react-bootstrap'
 
 import { AuthContext } from '../context/auth'
 import PageTitle from '../components/common/PageTitle'
-import TenantsTable from '../components/tenants/TenantsTable'
-import OpenModal from '../components/common/OpenModal'
-import NewTenantForm from '../components/tenants/NewTenantForm'
+import PackagesTable from '../components/packages/PackagesTable'
+import OpenNewPackageModal from '../components/packages/OpenNewPackageModal'
 
-import { FETCH_TENANTS_QUERY } from '../utils/graphql'
+import { GET_PACKAGES } from '../utils/graphql'
 
-function Tenants () {
+function Packages () {
   const { user } = useContext(AuthContext)
 
   const columns = [
-    'Resident',
-    'First Name',
-    'Last Name',
-    'Apartment #',
-    'Resident Since',
-    'Phone',
-    'Visitor/Incident Logs',
-    'Add Visitor/Incident'
+    'Package Id',
+    'Received Date',
+    'Received By',
+    'Recipient/Resident',
+    'Status',
+    'Notes'
   ]
 
   if (user) {
-    const { loading, data } = useQuery(FETCH_TENANTS_QUERY, {})
+    const { loading, data, error } = useQuery(GET_PACKAGES, {})
     if (loading) return <Spinner animation='border' />
     if (!loading && typeof data === 'undefined') {
-      return <Redirect to='/error' />
+      return <Redirect to='/error' state={error.message} />
     }
     return (
       <Container fluid className='main-content-container px-4'>
         <Row noGutters className='page-header py-4'>
           <PageTitle
             sm='4'
-            title='Resident Registry'
-            subtitle='Registry'
+            title='Packages List'
+            subtitle='Packages'
             className='text-sm-left'
           />
         </Row>
@@ -47,24 +44,18 @@ function Tenants () {
               <Card.Header className='border-bottom'>
                 <Row>
                   <Col>
-                    <h6 className='m-0'>Active Residents</h6>
+                    <h6 className='m-0'>Recent Packages</h6>
                   </Col>
                   <Col>
                     <div className='d-flex justify-content-end'>
-                      <OpenModal
-                        variant='primary'
-                        name='Create New Resident'
-                        size='md'
-                        modalTitle='New Resident'
-                        component={<NewTenantForm />}
-                      />
+                      <OpenNewPackageModal size='md' variant='primary' />
                     </div>
                   </Col>
                 </Row>
               </Card.Header>
               <Card.Body className='p-0 pb-3'>
                 {
-                  !loading && <TenantsTable data={data.getTenants} columns={columns} />
+                  !loading && <PackagesTable data={data.getPackages} columns={columns} />
                 }
               </Card.Body>
             </Card>
@@ -77,4 +68,4 @@ function Tenants () {
   }
 }
 
-export default Tenants
+export default Packages

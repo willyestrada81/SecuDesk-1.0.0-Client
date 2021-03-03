@@ -6,8 +6,9 @@ import NewTenantForm from '../../tenants/NewTenantForm'
 import OpenModal from '../../common/OpenModal'
 import OpenIncidentModal from '../../incidents/OpenIncidentModal'
 import OpenVisitorModal from '../../visitorsLogs/OpenVisitorModal'
+import OpenNewPackageModal from '../../packages/OpenNewPackageModal'
 
-function NavbarActions ({ actions }) {
+function NavbarActions () {
   const { user, logout } = useContext(AuthContext)
 
   return (
@@ -29,8 +30,7 @@ function NavbarActions ({ actions }) {
           </span>
         </Dropdown.Toggle>
 
-        <Dropdown.Menu>
-          <OpenIncidentModal size='md' />
+        <Dropdown.Menu style={{ minWidth: '200px' }}>
           <OpenModal
             variant='link'
             name='Create New Resident'
@@ -38,7 +38,9 @@ function NavbarActions ({ actions }) {
             modalTitle='New Resident'
             component={<NewTenantForm />}
           />
+          <OpenIncidentModal size='md' />
           <OpenVisitorModal size='md' variant='link' />
+          <OpenNewPackageModal size='md' variant='link' />
         </Dropdown.Menu>
       </Dropdown>
       <Dropdown>

@@ -16,6 +16,7 @@ import OpenIncidentModal from '../components/incidents/OpenIncidentModal'
 
 import OpenModal from '../components/common/OpenModal'
 import OpenVisitorModal from '../components/visitorsLogs/OpenVisitorModal'
+import OpenNewPackageModal from '../components/packages/OpenNewPackageModal'
 
 function Dashboard () {
   const { user } = useContext(AuthContext)
@@ -81,6 +82,7 @@ function Dashboard () {
                           <OpenIncidentModal size='lg' />
                           <OpenVisitorModal size='lg' variant='link' />
                           <br />
+                          <OpenNewPackageModal size='lg' variant='link' />
                         </Card.Body>
                       </Card>
                     </Col>

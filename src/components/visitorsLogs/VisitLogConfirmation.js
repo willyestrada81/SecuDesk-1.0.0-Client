@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { Button, Modal } from 'react-bootstrap'
 import moment from 'moment'
 
 import { LOG_VISIT } from '../../utils/graphql'
+import { ToastMessageContext } from '../../context/toastMessage'
 
-export default function VisitLogConfirmation ({ tenantId, visitorId, tenantName, visitorName, setMessage }) {
+export default function VisitLogConfirmation ({ tenantId, visitorId, tenantName, visitorName, setModalMessage, variant, size }) {
   const [show, setShow] = useState(false)
+
+  const { setMessage } = useContext(ToastMessageContext)
 
   const handleError = (error) => {
     setShow(false)
@@ -19,9 +22,14 @@ export default function VisitLogConfirmation ({ tenantId, visitorId, tenantName,
     )
   }
 
-  const handleSuccess = (data) => {
+  const hundleCompleted = (data) => {
+    setMessage({
+      message: `Success. Visit was logged on ${moment(data && data.createdAt).format('LLL')}`,
+      show: true,
+      isError: false
+    })
     setShow(false)
-    setMessage(
+    setModalMessage(
       {
         show: true,
         message: `Success. Visit was logged on ${moment(data && data.createdAt).format('LLL')}`,
@@ -29,6 +37,7 @@ export default function VisitLogConfirmation ({ tenantId, visitorId, tenantName,
       }
     )
   }
+
   const handleShow = () => setShow(true)
   const handleClose = () => setShow(false)
 
@@ -41,7 +50,7 @@ export default function VisitLogConfirmation ({ tenantId, visitorId, tenantName,
       handleError(error)
     },
     onCompleted (data) {
-      handleSuccess(data)
+      hundleCompleted(data)
     }
   })
 
@@ -51,8 +60,8 @@ export default function VisitLogConfirmation ({ tenantId, visitorId, tenantName,
 
   return (
     <>
-      <Button variant='primary' onClick={handleShow}>
-        Log new visit
+      <Button variant={variant} onClick={handleShow} size={size}>
+        Log new visit for {visitorName}
       </Button>
 
       <Modal

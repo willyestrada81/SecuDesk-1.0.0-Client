@@ -1,7 +1,7 @@
 import React from 'react'
-import TableRow from './TableRow'
+import SingleTenant from './SingleTenant'
 
-export default function Table ({ data, columns }) {
+export default function TenantsTable ({ data, columns }) {
   if (data.length) {
     return (
       <table className='table mb-0'>
@@ -20,7 +20,7 @@ export default function Table ({ data, columns }) {
         </thead>
         {
           data.map((tenant, index) => {
-            return <TableRow tenant={tenant} key={index} />
+            return <SingleTenant tenant={tenant} key={index} />
           })
         }
       </table>

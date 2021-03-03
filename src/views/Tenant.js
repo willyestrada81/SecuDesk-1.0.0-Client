@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { AuthContext } from '../context/auth'
 import { Link, Redirect } from 'react-router-dom'
 
-import { Image, Container, Row, Col, Card } from 'react-bootstrap'
+import { Image, Container, Row, Col, Card, Button } from 'react-bootstrap'
 import { useQuery } from '@apollo/react-hooks'
 
 import { GET_TENANT_BY_ID } from '../utils/graphql'
@@ -54,7 +54,7 @@ function Tenant (props) {
                       </Col>
                       <Col>
                         <div className='d-flex justify-content-end'>
-                          <Link
+                          <Button
                             className='btn btn-info'
                             to={{
                               pathname: '#',
@@ -64,7 +64,7 @@ function Tenant (props) {
                             }}
                           >
                             Edit Resident Profile
-                          </Link>
+                          </Button>
                         </div>
                       </Col>
                     </Row>

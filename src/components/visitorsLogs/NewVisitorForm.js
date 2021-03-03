@@ -1,17 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { Form, Modal, Button, ListGroup } from 'react-bootstrap'
 
 import { CREATE_VISITOR_LOG } from '../../utils/graphql'
 import { hasEmptyStrings } from '../../utils/utils'
+import { ToastMessageContext } from '../../context/toastMessage'
 
-export default function NewVisitLogForm ({ buttonText, showAsLink = false, size, variant, setMessage, tenantId }) {
+export default function NewVisitLogForm ({ buttonText, showAsLink = false, size, variant, setModalMessage, tenantId }) {
   const [visitorLog, setVisitorLog] = useState({})
   const [lgShow, setLgShow] = useState(false)
 
+  const { setMessage } = useContext(ToastMessageContext)
+
   const handleError = (error) => {
     setLgShow(false)
-    setMessage(
+    setModalMessage(
       {
         show: true,
         message: `${error && error.message}. Please try again, if error persists, contact the system admin.`,
@@ -21,8 +24,13 @@ export default function NewVisitLogForm ({ buttonText, showAsLink = false, size,
   }
 
   const handleSuccess = (data) => {
+    setMessage({
+      message: `Success. Visitor ${data && data.createVisitorLog.visitorName} added`,
+      show: true,
+      isError: false
+    })
     setLgShow(false)
-    setMessage(
+    setModalMessage(
       {
         show: true,
         message: `Success. Visitor ${data && data.createVisitorLog.visitorName} added`,

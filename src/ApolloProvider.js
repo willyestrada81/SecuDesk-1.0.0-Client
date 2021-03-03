@@ -12,8 +12,9 @@ import { setContext } from 'apollo-link-context'
 
 import App from './App'
 
+const server = 'https://pacific-bastion-23508.herokuapp.com'
 const httpLink = createUploadLink({
-  uri: 'https://pacific-bastion-23508.herokuapp.com'
+  uri: server
 })
 
 const authLink = setContext(() => {
@@ -25,17 +26,9 @@ const authLink = setContext(() => {
   }
 })
 
-export const typeDefs = gql`
-  extend type Query {
-    isLoggedIn: Boolean!
-    cartItems: [ID!]!
-  }
-`
-
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
-  typeDefs
+  cache: new InMemoryCache()
 })
 
 export default (

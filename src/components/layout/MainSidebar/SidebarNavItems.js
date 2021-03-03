@@ -19,7 +19,7 @@ function SidebarNavItems () {
     {
       title: 'Packages',
       htmlBefore: '<i class="material-icons">local_shipping</i>',
-      to: '/tenants'
+      to: '/packages'
     }
   ]
 

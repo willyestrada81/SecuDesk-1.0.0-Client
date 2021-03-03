@@ -4,12 +4,12 @@ import { Container, Row, Col, Card, CardHeader, CardBody } from 'shards-react'
 
 import { AuthContext } from '../context/auth'
 import PageTitle from '../components/common/PageTitle'
-import Table from '../components/common/Table'
+import TenantsTable from '../components/tenants/TenantsTable'
 
 function TenantsSearchResult (props) {
   const { user } = useContext(AuthContext)
 
-  const { data } = props.location.state
+  const data = props.location.state && props.location.state.data
   const columns = [
     'Resident',
     'First Name',
@@ -24,7 +24,6 @@ function TenantsSearchResult (props) {
   if (user) {
     return (
       <Container fluid className='main-content-container px-4'>
-        {/* Page Header */}
         <Row noGutters className='page-header py-4'>
           <PageTitle
             sm='4'
@@ -46,7 +45,7 @@ function TenantsSearchResult (props) {
               </CardHeader>
               <CardBody className='p-0 pb-3'>
                 {
-                  data && <Table data={data.searchTenants} columns={columns} />
+                  data && <TenantsTable data={data.searchTenants} columns={columns} />
                 }
               </CardBody>
             </Card>

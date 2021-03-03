@@ -5,8 +5,9 @@ import { Redirect } from 'react-router-dom'
 import { Table, Spinner } from 'react-bootstrap'
 
 import { GET_VISITORS_BY_TENANT_ID } from '../../utils/graphql'
-// import VisitorStatus from './VisitorStatus'
 import ChangeVisitorStatus from './ChangeVisitorStatus'
+import VisitsLogsModal from './VisitsLogsModal'
+import VisitLogConfirmation from './VisitLogConfirmation'
 
 export default function VisitorsLogs ({
   tenantId,
@@ -32,7 +33,6 @@ export default function VisitorsLogs ({
     )
   }
 
-  if (!loading) console.log(data)
   return (
     !loading && data.getVisitorsByTenantId.length
       ? (
@@ -43,8 +43,9 @@ export default function VisitorsLogs ({
               <th>Last Name</th>
               <th>Status</th>
               <th>Date Created</th>
+              <th>Visits Logs</th>
+              <th>Log New Visit</th>
               <th>Notes</th>
-              <th>Logged By Employee</th>
             </tr>
           </thead>
           <tbody>
@@ -54,7 +55,6 @@ export default function VisitorsLogs ({
                   id,
                   visitorName,
                   visitorLastName,
-                  createdBy,
                   notes,
                   createdAt
                 } = visitors
@@ -71,8 +71,22 @@ export default function VisitorsLogs ({
                       />
                     </td>
                     <td>{moment(createdAt).format('LLL')}</td>
+                    <td>
+                      <VisitsLogsModal
+                        tenantId={tenantId}
+                        visitorId={id}
+                      />
+                    </td>
+                    <td>
+                      <VisitLogConfirmation
+                        tenantId={tenantId}
+                        visitorId={id}
+                        variant='link'
+                        visitorName={visitorName}
+                        sise='sm'
+                      />
+                    </td>
                     <td>{notes}</td>
-                    <td>{createdBy}</td>
                   </tr>
                 )
               })}

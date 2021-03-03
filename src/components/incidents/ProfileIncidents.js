@@ -5,6 +5,8 @@ import NewVisitLogForm from '../visitorsLogs/NewVisitLogForm'
 import TabLayout from '../common/TabLayout'
 import IncidentLogs from './IncidentLogs'
 import VisitorsLogs from '../visitorsLogs/VisitorsLogs'
+import PackagesByTenant from '../packages/PackagesByTenant'
+import NewPackageForm from '../packages/NewPackageForm'
 
 export default function ProfileIncidents ({
   incidentLogs,
@@ -28,6 +30,10 @@ export default function ProfileIncidents ({
     {
       component: <IncidentLogs key='incidents' incidentLogs={incidentLogs} />,
       title: 'incidents'
+    },
+    {
+      component: <PackagesByTenant key='packages' tenantId={tenantId} />,
+      title: 'packages'
     }
   ]
 
@@ -73,6 +79,12 @@ export default function ProfileIncidents ({
                     buttonText='Log new visit'
                     size='md'
                     variant='link'
+                  />
+                  <NewPackageForm
+                    tenantId={tenantId}
+                    tenantName={tenantName}
+                    buttonText='Log new package'
+                    showAsLink
                   />
                 </Dropdown.Menu>
               </Dropdown>

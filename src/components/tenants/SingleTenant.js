@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 
 import { Image, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import NewIncidentForm from '../incidents/NewIncidentForm'
 import NewVisitorForm from '../visitorsLogs/NewVisitLogForm'
+import NewPackageForm from '../packages/NewPackageForm'
 
-export default function TableRow ({ tenant }) {
+export default function SingleTenant ({ tenant }) {
   const {
     id,
     tenantFirstName,
@@ -109,15 +110,24 @@ export default function TableRow ({ tenant }) {
             <Dropdown.Menu>
               <NewIncidentForm
                 tenantId={id}
-                tenantFirstName={tenantFirstName}
+                tenantName={tenantFirstName}
                 buttonText='New Incident'
                 showAsLink
               />
               <NewVisitorForm
-                tenantId={tenant.id}
-                tenantFirstName={tenant.tenantFirstName}
+                tenantId={id}
+                tenantName={tenantFirstName}
                 buttonText='New Visitor'
                 title='Add a Visitor'
+                size='md'
+                variant='link'
+                showAsLink
+              />
+              <NewPackageForm
+                tenantId={id}
+                tenantName={tenantFirstName}
+                buttonText='New Package'
+                title='Log New Package'
                 size='md'
                 variant='link'
                 showAsLink

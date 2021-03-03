@@ -3,11 +3,10 @@ import gql from 'graphql-tag'
 export const FETCH_LOGS_QUERY = gql`
 {
   getIncidentLogs {
-id,
+    id,
     incidentType,
     createdAt,
     createdBy,
-    tenant
   }
 }
 `
@@ -38,17 +37,36 @@ mutation searchTenants($filter: String!) {
     incidentLogs {
       id
       incidentType
+      notes
+      createdAt
       createdBy
+      employeeId
     }
-    incidentCount
+    bannedVisitors {
+      visitorName
+      visitorId
+      changedDate
+      changedBy
+    }
+    permanentVisitors {
+      visitorName
+      visitorId
+      changedDate
+      changedBy
+    }
   }
 }
 `
 
 export const SUBMIT_INCIDENT_MUTATION = gql`
-mutation createLog($tenantId: String!, $incidentType: String!) {
+mutation createIncidentLog($tenantId: String!, $incidentType: String!) {
   createIncidentLog(tenantId: $tenantId, incidentType: $incidentType) {
     id
+    incidentType
+    createdAt
+    createdBy
+    notes
+    employeeId
   }
 }
 `
@@ -56,7 +74,7 @@ mutation createLog($tenantId: String!, $incidentType: String!) {
 export const GET_SYSTEM_ACTIVITIES = gql`
 {
   getSystemActivities {
-id
+    id
     activityType
     createdBy
     createdAt
@@ -153,6 +171,26 @@ export const CREATE_TENANT = gql`
       tenantPhone
       tenantEmail
       tenantProfilePhoto
+      incidentLogs {
+        id
+        incidentType
+        notes
+        createdAt
+        createdBy
+        employeeId
+      }
+      bannedVisitors {
+        visitorName
+        visitorId
+        changedDate
+        changedBy
+      }
+      permanentVisitors {
+        visitorName
+        visitorId
+        changedDate
+        changedBy
+      }
     }
   }
 `
@@ -239,6 +277,21 @@ export const UPDATE_EMPLOYEE = gql`
       RegisterEmployeeInput: $RegisterEmployeeInput
     ) {
       firstName
+      lastName
+      organization
+      id
+      email
+      isAdmin
+      gender
+      hireDate
+      bio
+      jobTitle
+      address
+      city
+      state
+      zip
+      employeeProfilePhoto
+      mustResetPassword
     }
   }
 `
@@ -400,6 +453,26 @@ query getVisitorsByTenantId($tenantId: ID!) {
   }
 }
 `
+
+export const GET_VISITS_LOGS_BY_TENANT_ID = gql`
+query getTenantVisitLogs($tenantId: ID!, $visitorId: ID!) {
+  getTenantVisitLogs(tenantId: $tenantId, visitorId: $visitorId) {
+    id
+    visitorName
+    visitorLastName
+    createdAt
+    notes
+    visitsLogs {
+      id
+      visitDate
+      createdBy
+      employeeId
+      tenantId
+    }
+  }
+}
+`
+
 export const LOG_VISIT = gql`
 mutation logVisit($tenantId: ID!, $visitorId: ID!) {
   logVisit(tenantId: $tenantId, visitorId: $visitorId) {
@@ -492,6 +565,119 @@ mutation removePermanentVisitor($tenantId: ID!, $visitorId: ID!) {
         changedDate
         changedBy
       }
+  }
+}
+`
+
+export const GET_PACKAGES = gql`
+query getPackages {
+  getPackages {
+    id
+    receivedDate
+    receivedByEmployeeId
+    receivedByEmployee
+    recipientName
+    recipientId
+    notes
+    isDelivered
+    delivery {
+      deliveredByEmployeeId
+      receivedByTenantId
+      deliveryDate
+      receivedByEmployee
+      receivedByTenant
+      notes
+    }
+  }
+}
+`
+
+export const DELIVER_PACKAGE = gql`
+mutation deliverPackage($packageId: ID!, $tenantId: ID!, $notes: String) {
+  deliverPackage(packageId: $packageId, tenantId: $tenantId, notes: $notes) {
+    id
+    receivedDate
+    receivedByEmployeeId
+    receivedByEmployee
+    recipientName
+    recipientId
+    notes
+    isDelivered
+    delivery {
+      deliveredByEmployeeId
+      receivedByTenantId
+      deliveryDate
+      receivedByEmployee
+      receivedByTenant
+      notes
+    }
+  }
+}
+`
+export const GET_PACKAGE_BY_ID = gql`
+query getPackageById($packageId: ID!) {
+  getPackages(packageId: $packageId) {
+    id
+    receivedDate
+    receivedByEmployeeId
+    receivedByEmployee
+    recipientName
+    recipientId
+    notes
+    isDelivered
+    delivery {
+      deliveredByEmployeeId
+      receivedByTenantId
+      deliveryDate
+      receivedByEmployee
+      receivedByTenant
+      notes
+    }
+  }
+}
+`
+export const GET_PACKAGE_BY_TENANT_ID = gql`
+query getPackagesByTenantId($tenantId: ID!) {
+  getPackagesByTenantId(tenantId: $tenantId) {
+    id
+    receivedDate
+    receivedByEmployeeId
+    receivedByEmployee
+    recipientName
+    recipientId
+    notes
+    isDelivered
+    delivery {
+      deliveredByEmployeeId
+      receivedByTenantId
+      deliveryDate
+      receivedByEmployee
+      receivedByTenant
+      notes
+    }
+  }
+}
+`
+
+export const CREATE_NEW_PACKAGE = gql`
+mutation createNewPackage($tenantId: ID!, $isDelivered: Boolean, $notes: String) {
+  createNewPackage(tenantId: $tenantId, isDelivered: $isDelivered, notes: $notes) {
+    id
+    receivedDate
+    receivedByEmployeeId
+    receivedByEmployee
+    recipientName
+    recipientId
+    notes
+    isDelivered
+    delivery {
+      deliveredByEmployeeId
+      receivedByTenantId
+      deliveryDate
+      receivedByEmployee
+      receivedByTenant
+      notes
+    }
   }
 }
 `

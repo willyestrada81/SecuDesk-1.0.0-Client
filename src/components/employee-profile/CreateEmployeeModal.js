@@ -12,15 +12,8 @@ export default function CreateEmployeeModal ({
 }) {
   const [lgShow, setLgShow] = useState(false)
 
-  // const [values, setValues] = useState({
-  // })
-
   const [employee, setEmployee] = useState({})
 
-  // function update (event) {
-  //   const value = event.target.value
-  //   setValues({ ...values, [event.target.name]: value })
-  // }
   function update (event, field) {
     const fieldName = event ? [event.target.name] : [Object.keys(field)]
     const value = event ? event.target.value : Object.values(field)[0]

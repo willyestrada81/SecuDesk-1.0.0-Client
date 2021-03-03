@@ -1,29 +1,35 @@
 import React, { useState } from 'react'
 import { Alert, Button, Modal } from 'react-bootstrap'
 import SearchTenantForm from '../tenants/SearchTenantForm'
-import NewIncidentForm from './NewIncidentForm'
+import NewPackageForm from './NewPackageForm'
 
-export default function OpenIncidentModal ({ size }) {
+export default function OpenNewPackageModal ({ size, variant }) {
   const [lgShow, setLgShow] = useState(false)
   const [searchResult, setSearchResult] = useState({})
 
+  const onCloseModal = () => {
+    setLgShow(false)
+    setSearchResult({})
+  }
+
   return (
     <>
-      <Button onClick={() => setLgShow(true)} variant='link' size={size} className='text-start'>
-        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' className='bi bi-exclamation-octagon-fill mr-2' viewBox='0 0 16 16'>
-          <path d='M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z' />
+      <Button onClick={() => setLgShow(true)} variant={variant} size={size}>
+        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' className='bi bi-mailbox2 mr-2' viewBox='0 0 16 16'>
+          <path d='M9 8.5h2.793l.853.854A.5.5 0 0 0 13 9.5h1a.5.5 0 0 0 .5-.5V8a.5.5 0 0 0-.5-.5H9v1z' />
+          <path d='M12 3H4a4 4 0 0 0-4 4v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7a4 4 0 0 0-4-4zM8 7a3.99 3.99 0 0 0-1.354-3H12a3 3 0 0 1 3 3v6H8V7zm-3.415.157C4.42 7.087 4.218 7 4 7c-.218 0-.42.086-.585.157C3.164 7.264 3 7.334 3 7a1 1 0 0 1 2 0c0 .334-.164.264-.415.157z' />
         </svg>
-        Log a new Incident
+        Log New Package
       </Button>
       <Modal
         size='lg'
         show={lgShow}
-        onHide={() => setLgShow(false)}
+        onHide={onCloseModal}
         aria-labelledby='example-modal-sizes-title-lg'
       >
-        <Modal.Header closeButton>Create a new incident</Modal.Header>
+        <Modal.Header closeButton>Log New Package</Modal.Header>
         <Modal.Body>
-          <p className='mb-4 h5'>Search Resident to Log Incident. <br /></p>
+          <p className='mb-4 h5'>Search Package Recipient. <br /></p>
           <SearchTenantForm setSearchResult={setSearchResult} />
           {searchResult.searchTenants && Object.values(searchResult)[0].length > 0
             ? (
@@ -31,7 +37,7 @@ export default function OpenIncidentModal ({ size }) {
                 <h4>Results:</h4>
                 {searchResult.searchTenants.map((tenant, index) => {
                   return (
-                    <NewIncidentForm
+                    <NewPackageForm
                       key={index}
                       tenantId={tenant.id}
                       tenantFirstName={tenant.tenantFirstName}
@@ -52,7 +58,7 @@ export default function OpenIncidentModal ({ size }) {
               : ('')}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={() => setLgShow(false)}>
+          <Button variant='secondary' onClick={onCloseModal}>
             Close
           </Button>
         </Modal.Footer>

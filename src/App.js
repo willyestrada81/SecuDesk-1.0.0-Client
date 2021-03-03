@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './utilities/styles/secudesk.1.1.0.min.css'
 
 import { AuthProvider } from './context/auth'
+import { ToastMessageProvider } from './context/toastMessage'
 import AuthRoute from './utils/AuthRoute'
 import MainNavbar from './components/layout/MainNavbar/MainNavbar'
 
@@ -17,17 +18,21 @@ import SearchTenantForm from './components/tenants/SearchTenantForm'
 import TenantsSearchResult from './views/TenantsSearchResult'
 import Tenant from './views/Tenant'
 import EmployeeAccount from './views/EmployeeAccount'
+import ToastMessages from './components/common/ToastMessages'
+import Packages from './views/Packages'
 
 function App () {
   return (
     <AuthProvider>
       <Router>
-        <div>
+        <ToastMessageProvider>
           <MainSidebar />
           <MainNavbar />
+          <ToastMessages />
           <AuthRoute exact path='/login' component={LoginForm} />
           <Route exact path='/' component={Dashboard} />
           <Route exact path='/tenants' component={Tenants} />
+          <Route exact path='/packages' component={Packages} />
           <Route exact path='/tenant/:id' component={Tenant} />
           <Route exact path='/user-profile' component={EmployeeAccount} />
           <Route exact path='/incident-logs' component={Incidents} />
@@ -36,7 +41,7 @@ function App () {
           <Route exact path='/search-result' component={TenantsSearchResult} />
           {/* <Route exact path='/reset-password/:id' component={ResetPassord} /> */}
           <AuthRoute exact path='/accounts/resident-registration/:id' component={LoginForm} />
-        </div>
+        </ToastMessageProvider>
       </Router>
     </AuthProvider>
   )

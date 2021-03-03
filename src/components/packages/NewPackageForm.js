@@ -2,18 +2,18 @@ import React, { useState, useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { Form, Modal, Button, ListGroup } from 'react-bootstrap'
 
-import { SUBMIT_INCIDENT_MUTATION } from '../../utils/graphql'
+import { CREATE_NEW_PACKAGE } from '../../utils/graphql'
 import { ToastMessageContext } from '../../context/toastMessage'
 
-function NewIncidentForm ({ tenantId, tenantName, buttonText, showAsLink = false, size }) {
-  const [incidentType, setIncident] = useState('')
+function NewPackageForm ({ tenantId, tenantName, buttonText, showAsLink = false, size }) {
   const [lgShow, setLgShow] = useState(false)
+  const [newPackage, setNewPackage] = useState({})
 
   const { setMessage } = useContext(ToastMessageContext)
 
   const hundleCompleted = () => {
     setMessage({
-      message: 'Success: Incident Created',
+      message: 'Success: Package logged',
       show: true,
       isError: false
     })
@@ -21,11 +21,12 @@ function NewIncidentForm ({ tenantId, tenantName, buttonText, showAsLink = false
   }
 
   const [submitIncidentLog] = useMutation(
-    SUBMIT_INCIDENT_MUTATION,
+    CREATE_NEW_PACKAGE,
     {
       variables: {
         tenantId: tenantId,
-        incidentType
+        isDelivered: newPackage.isDelivered === 'on',
+        notes: newPackage.notes
       },
       onError (err) {
         console.log(err.networkError)
@@ -38,6 +39,18 @@ function NewIncidentForm ({ tenantId, tenantName, buttonText, showAsLink = false
   const submitIncident = () => {
     submitIncidentLog()
   }
+
+  const onChange = (event) => {
+    setNewPackage({
+      ...newPackage, [event.target.name]: event.target.value
+    })
+  }
+
+  const onCloseModal = () => {
+    setLgShow(false)
+    setNewPackage({})
+  }
+
   return (
     <>
       {showAsLink
@@ -50,12 +63,12 @@ function NewIncidentForm ({ tenantId, tenantName, buttonText, showAsLink = false
           </ListGroup>
           )}
       <Modal
-        size='lg'
+        size='md'
         show={lgShow}
-        onHide={() => setLgShow(false)}
+        onHide={onCloseModal}
         aria-labelledby='modal-sizes-title-lg'
       >
-        <Modal.Header closeButton>New Incident for {tenantName}</Modal.Header>
+        <Modal.Header closeButton>New Package for {tenantName}</Modal.Header>
         <Modal.Body>
           <Form
             onSubmit={(e) => {
@@ -64,35 +77,37 @@ function NewIncidentForm ({ tenantId, tenantName, buttonText, showAsLink = false
             }}
             noValidate
           >
-            <Form.Group>
-              <Form.Control
-                as='select'
+            <Form.Group controlId='formBasicCheckbox'>
+              <Form.Check
+                id='isPackageDelivered'
+                type='checkbox'
+                label='Is Delivered?'
+                name='isDelivered'
                 className='mr-sm-2 mb-2'
-                id='incifentTypeSelect'
-                onChange={(event) => setIncident(event.target.value)}
-              >
-                <option value=''>Choose...</option>
-                <option value='Visitor'>Visitor</option>
-                <option value='Repairs'>Repairs</option>
-                <option value='Delivery'>Delivery</option>
-              </Form.Control>
+                onChange={onChange}
+              />
             </Form.Group>
             <Form.Group>
-              <Form.Control as='textarea' rows={3} placeholder='Notes...' />
+              <Form.Control
+                as='textarea'
+                rows={3}
+                name='notes'
+                placeholder='Notes...'
+                onChange={onChange}
+              />
             </Form.Group>
             <Form.Group className='mb-0'>
               <Button
                 theme='accent'
                 type='submit'
-                disabled={incidentType.trim() === ''}
               >
-                Submit Incident
+                Log Package
               </Button>
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={() => setLgShow(false)}>
+          <Button variant='secondary' onClick={onCloseModal}>
             Close
           </Button>
         </Modal.Footer>
@@ -101,4 +116,4 @@ function NewIncidentForm ({ tenantId, tenantName, buttonText, showAsLink = false
   )
 }
 
-export default NewIncidentForm
+export default NewPackageForm

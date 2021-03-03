@@ -6,7 +6,7 @@ import VisitLogConfirmation from './VisitLogConfirmation'
 import NewVisitorForm from './NewVisitorForm'
 
 export default function NewVisitLogForm ({ tenantId, tenantName, buttonText, size, variant }) {
-  const [message, setMessage] = useState({
+  const [message, setModalMessage] = useState({
     show: false,
     message: '',
     success: false
@@ -18,7 +18,7 @@ export default function NewVisitLogForm ({ tenantId, tenantName, buttonText, siz
 
   const handleClose = () => {
     setSearchResult({})
-    setMessage({})
+    setModalMessage({})
     setLgShow(false)
   }
 
@@ -47,7 +47,8 @@ export default function NewVisitLogForm ({ tenantId, tenantName, buttonText, siz
                       visitorId={visitor.id}
                       tenantName={tenantName}
                       visitorName={visitor.visitorName}
-                      setMessage={setMessage}
+                      setModalMessage={setModalMessage}
+                      variant='primary'
                     />
                   )
                 })}
@@ -62,7 +63,7 @@ export default function NewVisitLogForm ({ tenantId, tenantName, buttonText, siz
                     size='md'
                     variant='primary'
                     showAsLink
-                    setMessage={setMessage}
+                    setModalMessage={setModalMessage}
                     tenantId={tenantId}
                   />
                 </div>
