@@ -2,9 +2,9 @@ import React, { useContext } from 'react'
 import classNames from 'classnames'
 import { Container, Navbar } from 'shards-react'
 
-import { AuthContext } from '../../../context/auth'
 import NavbarSearch from './NavbarSearch'
 import NavbarActions from './NavbarActions'
+import { AuthContext } from '../../../context/auth'
 
 const MainNavbar = () => {
   const classes = classNames(

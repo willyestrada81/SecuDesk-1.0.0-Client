@@ -7,8 +7,8 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { GET_EMPLOYEE_BY_ID } from '../utils/graphql'
 import { AuthContext } from '../context/auth'
 import PageTitle from '../components/common/PageTitle'
-import EmployeeSummary from '../components/employee-profile/EmployeeSummary'
-import EmployeeAccountDetails from '../components/employee-profile/EmployeeAccountDetails'
+import EmployeeSummary from '../components/employee/EmployeeSummary'
+import EmployeeAccountDetails from '../components/employee/EmployeeAccountDetails'
 
 function EmployeeAccount () {
   const { user } = useContext(AuthContext)

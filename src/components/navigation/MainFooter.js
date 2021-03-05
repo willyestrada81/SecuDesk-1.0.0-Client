@@ -1,6 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Container, Row, Nav, NavItem, NavLink } from 'shards-react'
+import { Container, Row, Nav, NavItem, NavLink } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 const MainFooter = ({ contained, menuItems, copyright }) => (
@@ -21,21 +20,6 @@ const MainFooter = ({ contained, menuItems, copyright }) => (
     </Container>
   </footer>
 )
-
-MainFooter.propTypes = {
-  /**
-   * Whether the content is contained, or not.
-   */
-  contained: PropTypes.bool,
-  /**
-   * The menu items array.
-   */
-  menuItems: PropTypes.array,
-  /**
-   * The copyright info.
-   */
-  copyright: PropTypes.string
-}
 
 MainFooter.defaultProps = {
   contained: false,

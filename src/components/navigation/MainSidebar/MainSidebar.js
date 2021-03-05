@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { Col } from 'shards-react'
-
 import { AuthContext } from '../../../context/auth'
 import SidebarMainNavbar from './SidebarMainNavbar'
 import SidebarNavItems from './SidebarNavItems'

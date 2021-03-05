@@ -72,8 +72,8 @@ export default function ChangeVisitorStatus ({
     },
     onCompleted () {
       handleSuccess(
-        'Succsess. Visitor is now a permanent resident',
-        'succsess',
+        'Success. Visitor is now a permanent resident',
+        'success',
         'Permanent'
       )
     }

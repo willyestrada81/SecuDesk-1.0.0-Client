@@ -29,6 +29,7 @@ export default function VisitLogConfirmation ({ tenantId, visitorId, tenantName,
       isError: false
     })
     setShow(false)
+    setModalMessage &&
     setModalMessage(
       {
         show: true,

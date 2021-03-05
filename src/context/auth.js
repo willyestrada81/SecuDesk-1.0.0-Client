@@ -1,6 +1,5 @@
 import React, { useReducer, createContext } from 'react'
 import { Redirect } from 'react-router-dom'
-
 import jwtDecode from 'jwt-decode'
 
 const initialState = {
@@ -9,7 +8,6 @@ const initialState = {
 
 if (localStorage.getItem('jwtToken')) {
   const decodedToken = jwtDecode(localStorage.getItem('jwtToken'))
-
   if (decodedToken.exp * 1000 < Date.now()) {
     localStorage.removeItem('jwtToken')
   } else {

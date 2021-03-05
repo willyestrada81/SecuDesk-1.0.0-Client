@@ -203,6 +203,7 @@ mutation login($email: String!, $password: String!) {
     createdAt
     token
     isAdmin
+    isSuperAdmin
     employeeProfilePhoto
   }
 }
@@ -282,6 +283,7 @@ export const UPDATE_EMPLOYEE = gql`
       id
       email
       isAdmin
+      isSuperAdmin
       gender
       hireDate
       bio
@@ -432,6 +434,34 @@ mutation searchVisitors($filter: String!) {
       employeeId
       tenantId
     }
+  }
+}`
+
+export const ACTIVATE_EMPLOYEE = gql`
+mutation activateEmployee($activationCode: String!, $email: String!) {
+  activateEmployee(activationCode: $activationCode, email: $email)
+}`
+
+export const RESET_PASSWORD = gql`
+mutation resetPassword($email: String!, $password: String!, $confirmPassword: String!) {
+  resetPassword(email: $email, password: $password, confirmPassword: $confirmPassword) {
+    firstName
+    lastName
+    organization
+    id
+    email
+    isAdmin
+    isSuperAdmin
+    gender
+    hireDate
+    bio
+    jobTitle
+    address
+    city
+    state
+    zip
+    employeeProfilePhoto
+    mustResetPassword
   }
 }`
 
