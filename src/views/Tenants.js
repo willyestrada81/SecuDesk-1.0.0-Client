@@ -57,6 +57,7 @@ function Tenants () {
                         size='md'
                         modalTitle='New Resident'
                         component={<NewTenantForm />}
+                        showIcon
                       />
                     </div>
                   </Col>

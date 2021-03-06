@@ -9,8 +9,8 @@ import { setContext } from 'apollo-link-context'
 
 import App from './App'
 
-const server = 'https://pacific-bastion-23508.herokuapp.com'
-// const server = 'http://localhost:5000/'
+// const server = 'https://pacific-bastion-23508.herokuapp.com'
+const server = 'http://localhost:5000/'
 const httpLink = createUploadLink({
   uri: server
 })

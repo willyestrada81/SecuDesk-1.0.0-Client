@@ -16,6 +16,7 @@ export default function EmployeeForm ({
   values,
   submitEmployee
 }) {
+  console.log('NINJARMM ~ file: EmployeeForm.js ~ line 19 ~ employee', !!employeeData)
   const [file, setFile] = useState('')
 
   const [photoUrl, setPhotoUrl] = useState('')
@@ -41,7 +42,7 @@ export default function EmployeeForm ({
   return (
     <Row>
       <Col>
-        {!!employee && (
+        {!!employeeData && (
           <p className='text-primary'>** You can only update basic info.</p>
         )}
         <Form
@@ -63,7 +64,7 @@ export default function EmployeeForm ({
                   name='firstName'
                   defaultValue={employeeData ? employeeData.firstName : ''}
                   value={values.firstName}
-                  readOnly={!!employee}
+                  readOnly={!!employeeData}
                   onChange={callBack || {}}
                 />
               </Form.Group>
@@ -78,7 +79,7 @@ export default function EmployeeForm ({
                   name='lastName'
                   defaultValue={employeeData ? employeeData.lastName : ''}
                   value={values.lastName}
-                  readOnly={!!employee}
+                  readOnly={!!employeeData}
                   onChange={callBack || {}}
                 />
               </Form.Group>
@@ -90,15 +91,15 @@ export default function EmployeeForm ({
                 <Form.Check
                   type='radio'
                   name='gender'
-                  id='genderMale'
+                  id='male'
                   label='Male'
                   checked={
-                    employeeData ? employeeData.gender === 'Male' : false
+                    employeeData && employeeData.gender === 'Male'
                   }
-                  disabled={!!employee}
+                  disabled={!!employeeData}
                   onChange={callBack || {}}
                   className='color-gray mr-2'
-                  value={values.gender}
+                  value='Male'
                   style={{
                     display: 'inline-block',
                     padding: '.4375rem .75rem',
@@ -108,14 +109,14 @@ export default function EmployeeForm ({
                 <Form.Check
                   type='radio'
                   name='gender'
-                  id='genderFemale'
+                  id='female'
                   label='Female'
                   className='color-gray mr-2'
                   checked={
-                    employeeData ? employeeData.gender === 'Female' : false
+                    employeeData && employeeData.gender === 'Female'
                   }
-                  disabled={!!employee}
-                  value={values.gender}
+                  disabled={!!employeeData}
+                  value='Female'
                   onChange={callBack || {}}
                   style={{
                     display: 'inline-block',
@@ -133,7 +134,7 @@ export default function EmployeeForm ({
                   type='email'
                   placeholder='email'
                   name='email'
-                  readOnly={!!employee}
+                  readOnly={!!employeeData}
                   defaultValue={employeeData ? employeeData.email : ''}
                   value={values.email}
                   onChange={callBack || {}}
@@ -222,7 +223,7 @@ export default function EmployeeForm ({
                   name='hireDate'
                   defaultValue={employeeData ? employeeData.hireDate : ''}
                   value={values.hireDate}
-                  readOnly={!!employee}
+                  readOnly={!!employeeData}
                   onChange={callBack || {}}
                 />
               </Form.Group>
@@ -236,7 +237,7 @@ export default function EmployeeForm ({
                   name='jobTitle'
                   defaultValue={employeeData ? employeeData.jobTitle : ''}
                   value={values.jobTitle}
-                  readOnly={!!employee}
+                  readOnly={!!employeeData}
                   onChange={callBack || {}}
                 />
               </Form.Group>

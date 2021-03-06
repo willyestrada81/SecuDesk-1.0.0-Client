@@ -37,6 +37,7 @@ function NavbarActions () {
             size='md'
             modalTitle='New Resident'
             component={<NewTenantForm />}
+            showIcon
           />
           <OpenIncidentModal size='md' />
           <OpenVisitorModal size='md' variant='link' />

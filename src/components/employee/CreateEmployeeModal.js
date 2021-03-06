@@ -8,7 +8,9 @@ import { UPDATE_EMPLOYEE } from '../../utils/graphql'
 export default function CreateEmployeeModal ({
   employeeData,
   title,
-  customClassName
+  customClassName,
+  variant,
+  size
 }) {
   const [lgShow, setLgShow] = useState(false)
 
@@ -23,7 +25,7 @@ export default function CreateEmployeeModal ({
 
   const [updateEmployee] = useMutation(UPDATE_EMPLOYEE, {
     variables: {
-      employeeId: employeeData.id,
+      employeeId: employeeData && employeeData.id,
       RegisterEmployeeInput: employee
     },
     onError (err) {
@@ -47,8 +49,9 @@ export default function CreateEmployeeModal ({
     <>
       <Button
         onClick={() => setLgShow(true)}
-        variant='primary'
+        variant={variant}
         className={customClassName}
+        size={size}
       >
         {title}
       </Button>

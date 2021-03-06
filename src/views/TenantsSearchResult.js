@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Container, Row, Col, Card, CardHeader, CardBody } from 'shards-react'
+import { Container, Row, Col, Card } from 'react-bootstrap'
 
 import { AuthContext } from '../context/auth'
 import PageTitle from '../components/common/PageTitle'
@@ -34,20 +34,20 @@ function TenantsSearchResult (props) {
         </Row>
         <Row>
           <Col>
-            <Card small className='mb-4'>
-              <CardHeader className='border-bottom'>
+            <Card className='mb-4'>
+              <Card.Header className='border-bottom'>
                 <Row>
                   <Col>
                     <h6 className='m-0'>{typeof data !== 'undefined' && data.searchTenants.length} Resident(s) Found</h6>
                   </Col>
                   <Col />
                 </Row>
-              </CardHeader>
-              <CardBody className='p-0 pb-3'>
+              </Card.Header>
+              <Card.Body className='p-0 pb-3'>
                 {
                   data && <TenantsTable data={data.searchTenants} columns={columns} />
                 }
-              </CardBody>
+              </Card.Body>
             </Card>
           </Col>
         </Row>

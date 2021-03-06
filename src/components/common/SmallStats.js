@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import shortid from 'shortid'
-import { Card, CardBody } from 'shards-react'
+import { Card } from 'react-bootstrap'
 
 import Chart from '../../utils/chart'
 
@@ -82,11 +82,6 @@ class SmallStats extends React.Component {
   render () {
     const { variation, label, value, percentage, increase } = this.props
 
-    const cardClasses = classNames(
-      'stats-small',
-      variation && `stats-small--${variation}`
-    )
-
     const cardBodyClasses = classNames(
       variation === '1' ? 'p-0 d-flex' : 'px-0 pb-0'
     )
@@ -127,7 +122,7 @@ class SmallStats extends React.Component {
 
     return (
       <Card small className='stats-small--1'>
-        <CardBody className={cardBodyClasses}>
+        <Card.Body className={cardBodyClasses}>
           <div className={innerWrapperClasses}>
             <div className={dataFieldClasses}>
               <span className={labelClasses}>{label}</span>
@@ -142,7 +137,7 @@ class SmallStats extends React.Component {
             ref={this.canvasRef}
             className={`stats-small-${shortid()}`}
           />
-        </CardBody>
+        </Card.Body>
       </Card>
     )
   }

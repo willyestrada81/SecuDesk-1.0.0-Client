@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import classNames from 'classnames'
-import { Container, Navbar } from 'shards-react'
+import { Container, Navbar } from 'react-bootstrap'
 
 import NavbarSearch from './NavbarSearch'
 import NavbarActions from './NavbarActions'

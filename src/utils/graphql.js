@@ -700,6 +700,18 @@ export const GET_INCIDENT_CUSTOM_FIELDS = gql`
 }
 `
 
+export const CREATE_CUSTOM_FIELD = gql`
+mutation createCustomField($fieldName: String!) {
+  createCustomField(fieldName: $fieldName) {
+    id
+    createdBy
+    createdAt
+    employeeId
+    fieldName
+  }
+}
+`
+
 export const CREATE_NEW_PACKAGE = gql`
 mutation createNewPackage($tenantId: ID!, $isDelivered: Boolean, $notes: String) {
   createNewPackage(tenantId: $tenantId, isDelivered: $isDelivered, notes: $notes) {

@@ -1,7 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import PropTypes from 'prop-types'
-import { Col } from 'shards-react'
+import { Col } from 'react-bootstrap'
 
 const PageTitle = ({ title, subtitle, className, ...attrs }) => {
   const classes = classNames(
@@ -17,17 +16,6 @@ const PageTitle = ({ title, subtitle, className, ...attrs }) => {
       <h3 className='page-title'>{title}</h3>
     </Col>
   )
-}
-
-PageTitle.propTypes = {
-  /**
-   * The page title.
-   */
-  title: PropTypes.string,
-  /**
-   * The page subtitle.
-   */
-  subtitle: PropTypes.string
 }
 
 export default PageTitle

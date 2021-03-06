@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Button } from 'shards-react'
+import { Container, Button } from 'react-bootstrap'
 
 export default function Errors (props) {
   function goBack () {

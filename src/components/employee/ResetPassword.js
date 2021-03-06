@@ -33,7 +33,7 @@ export default function ResetPassword ({ title }) {
   return (
     <Form onSubmit={onSubmit} noValidate className='col-sm-4' style={{ marginTop: '10%' }}>
       <div className='log-box'>
-        <Image src={require('../../assets/images/secudesk-logo.png')} className='logo-img' />
+        <Image src={require('../../assets/images/secudesk-logo.png')} className='logo-img' alt='secuDesk-logo' />
       </div>
       <h4 className='mb-4' style={{ textAlign: 'center' }}>{title}</h4>
       <Form.Row>

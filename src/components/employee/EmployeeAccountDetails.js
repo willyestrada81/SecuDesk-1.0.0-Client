@@ -12,7 +12,7 @@ const UserAccountDetails = ({ employeeData }) => (
         </Col>
         <Col>
           <div className='d-flex justify-content-end'>
-            <CreateEmployeeModal title='Update Account' customClassName='float-left' employeeData={employeeData} />
+            <CreateEmployeeModal title='Update Account' customClassName='float-left' employeeData={employeeData} variant='primary' />
           </div>
         </Col>
       </Row>

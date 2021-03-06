@@ -20,14 +20,15 @@ import Tenant from './views/Tenant'
 import EmployeeAccount from './views/EmployeeAccount'
 import ToastMessages from './components/common/ToastMessages'
 import Packages from './views/Packages'
+import AdminPanel from './views/AdminPanel'
 
 function App () {
   return (
     <AuthProvider>
       <Router>
         <ToastMessageProvider>
-          <MainSidebar />
           <MainNavbar />
+          <MainSidebar />
           <ToastMessages />
           <AuthRoute exact path='/login' component={Login} />
           <Route exact path='/' component={Dashboard} />
@@ -39,6 +40,7 @@ function App () {
           <Route exact path='/search-resident' component={SearchTenantForm} />
           <Route exact path='/error' component={Errors} />
           <Route exact path='/search-result' component={TenantsSearchResult} />
+          <Route exact path='/admin-panel' component={AdminPanel} />
           <AuthRoute exact path='/activate-user/:activationCode' component={Login} />
           <AuthRoute exact path='/accounts/:resetPassword' component={Login} />
         </ToastMessageProvider>

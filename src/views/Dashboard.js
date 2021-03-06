@@ -76,6 +76,7 @@ function Dashboard () {
                             name='Create New Resident'
                             size='lg'
                             modalTitle='New Resident'
+                            showIcon
                             component={<NewTenantForm />}
                           />
                           <br />
