@@ -1,25 +1,16 @@
 import React from 'react'
-import { NavLink as RouteNavLink } from 'react-router-dom'
-import { NavItem, NavLink } from 'shards-react'
+import { NavLink } from 'react-router-dom'
 
-const SidebarNavItem = ({ item }) => (
-  <NavItem>
-    <NavLink tag={RouteNavLink} to={item.to}>
+export default function SidebarNavItem ({ item }) {
+  return (
+    <NavLink to={item.to} className='p-2 mb-1 text-muted' activeClassName='text-primary'>
       {item.htmlBefore && (
         <div
           className='d-inline-block item-icon-wrapper'
           dangerouslySetInnerHTML={{ __html: item.htmlBefore }}
         />
       )}
-      {item.title && <span>{item.title}</span>}
-      {item.htmlAfter && (
-        <div
-          className='d-inline-block item-icon-wrapper'
-          dangerouslySetInnerHTML={{ __html: item.htmlAfter }}
-        />
-      )}
+      {item.title && <span className='ml-1 text-uppercase'>{item.title}</span>}
     </NavLink>
-  </NavItem>
-)
-
-export default SidebarNavItem
+  )
+}

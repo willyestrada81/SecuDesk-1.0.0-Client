@@ -688,6 +688,17 @@ query getPackagesByTenantId($tenantId: ID!) {
   }
 }
 `
+export const GET_INCIDENT_CUSTOM_FIELDS = gql`
+{
+  getCustomFields {
+    id
+    createdBy
+    createdAt
+    employeeId
+    fieldName
+  }
+}
+`
 
 export const CREATE_NEW_PACKAGE = gql`
 mutation createNewPackage($tenantId: ID!, $isDelivered: Boolean, $notes: String) {

@@ -1,45 +1,49 @@
 import React, { useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks'
 
-import { Form, Button, Col, Image } from 'react-bootstrap'
+import { Form, Button, Col, Image, Row } from 'react-bootstrap'
 import { useForm } from '../../utils/hooks'
 
-import { RESET_PASSWORD } from '../../utils/graphql'
+import { ACTIVATE_EMPLOYEE } from '../../utils/graphql'
 
-export default function ResetPassword ({ title }) {
-  const history = useHistory()
+export default function ActivateUser ({ activationCode }) {
   const [errors, setErrors] = useState({})
+  const [message, setMessage] = useState(null)
 
   const { onChange, onSubmit, values } = useForm(loginUserCallback, {
-    email: '',
-    password: '',
-    confirmPassword: ''
+    email: ''
   })
 
-  const [resetPassword] = useMutation(RESET_PASSWORD, {
-    variables: values,
+  const onSuccess = () => {
+    setMessage('Success. Account Activated.')
+  }
+
+  const [activateEmployee] = useMutation(ACTIVATE_EMPLOYEE, {
+    variables: { ...values, activationCode },
     onError (err) {
       err.graphQLErrors && err.graphQLErrors[0]
         ? setErrors(err.graphQLErrors[0].extensions.exception.errors)
         : setErrors(err.message)
     },
-    onCompleted: () => history.push('/login')
+    onCompleted () {
+      onSuccess()
+    }
   })
 
   function loginUserCallback () {
-    resetPassword()
+    activateEmployee()
   }
   return (
     <Form onSubmit={onSubmit} noValidate className='col-sm-4' style={{ marginTop: '10%' }}>
       <div className='log-box'>
         <Image src={require('../../assets/images/secudesk-logo.png')} className='logo-img' />
       </div>
-      <h4 className='mb-4' style={{ textAlign: 'center' }}>{title}</h4>
+      <h4 className='mb-4' style={{ textAlign: 'center' }}>Activate User</h4>
       <Form.Row>
         <Col>
           {typeof errors === 'object' && !!Object.keys(errors).length && Object.values(errors).map((error, index) => {
-            return (<div key={index}><span className='ml-2 text-danger'>{error.toUpperCase()}</span></div>)
+            return (<div key={index}><span className='ml-2 text-danger'>{error}</span></div>)
           })}
           {
             typeof errors === 'string' && <span className='ml-2 text-danger'>{errors}</span>
@@ -58,45 +62,31 @@ export default function ResetPassword ({ title }) {
       </Form.Row>
       <Form.Row>
         <Col>
-          <Form.Control
-            style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}
-            className='my-2 p-2'
-            label='Password'
-            placeholder='Password..'
-            name='password'
-            type='password'
-            value={values.password}
-            onChange={onChange}
-          />
-        </Col>
-      </Form.Row>
-      <Form.Row>
-        <Col>
-          <Form.Control
-            style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}
-            className='my-2 p-2'
-            label='Confirm Password'
-            placeholder='Confirm Password..'
-            name='confirmPassword'
-            type='password'
-            value={values.confirmPassword}
-            onChange={onChange}
-          />
-        </Col>
-      </Form.Row>
-      <Form.Row>
-        <Col>
           <Button
             variant='info'
             type='submit'
             block
             className='my-3'
           >
-            Reset Password
+            Activate
           </Button>
         </Col>
       </Form.Row>
-      <Link to='/login' className='custom-link'>Back to login...</Link>
+      <Row>
+        <Col>
+          <p className='text-success bold'>{message}</p>
+          {message && <Link
+            className='text-info'
+            to={{
+              pathname: '/accounts/resetPassword',
+              state: {
+                title: 'Setup a Passoword'
+              }
+            }}
+                      >Please, setup a password...
+            </Link>}
+        </Col>
+      </Row>
     </Form>
   )
 }

@@ -8,8 +8,7 @@ function SidebarNavItems () {
     {
       title: 'Dashboard',
       to: '/',
-      htmlBefore: '<i class="material-icons">edit</i>',
-      htmlAfter: ''
+      htmlBefore: '<i class="material-icons">edit</i>'
     },
     {
       title: 'Residents',
@@ -20,12 +19,16 @@ function SidebarNavItems () {
       title: 'Packages',
       htmlBefore: '<i class="material-icons">local_shipping</i>',
       to: '/packages'
+    },
+    {
+      title: 'Create Employee',
+      htmlBefore: '<i class="material-icons">local_shipping</i>',
+      to: '/packages'
     }
   ]
-
   return (
-    <div className='nav-wrapper'>
-      <Nav className='nav--no-borders flex-column'>
+    <div className=''>
+      <Nav className='nav--no-borders flex-column ml-2 mt-2'>
         {navItems.map((item, idx) => (
           <SidebarNavItem key={idx} item={item} />
         ))}

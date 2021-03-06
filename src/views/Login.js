@@ -3,16 +3,17 @@ import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import LoginForm from '../components/employee/LoginForm'
 import ResetPassword from '../components/employee/ResetPassword'
+import ActivateUser from '../components/employee/ActivateUser'
 
 function Login (props) {
+  const title = props.location.state ? props.location.state.title : 'Reset Password'
   const getForm = () => {
     if (props.match.params.activationCode) {
       const activationCode = props.match.params.activationCode
-      return (<div>THIS IS TO ACTIVATEUSER</div>)
+      return (<ActivateUser activationCode={activationCode} />)
     }
     if (props.match.params.resetPassword) {
-      console.log(props.match.params.resetPassword)
-      return (<ResetPassword />)
+      return (<ResetPassword title={title} />)
     }
     return (<LoginForm />)
   }

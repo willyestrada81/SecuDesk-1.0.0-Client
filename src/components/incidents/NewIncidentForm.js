@@ -1,13 +1,15 @@
 import React, { useState, useContext } from 'react'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation, useQuery } from '@apollo/react-hooks'
 import { Form, Modal, Button, ListGroup } from 'react-bootstrap'
 
-import { SUBMIT_INCIDENT_MUTATION } from '../../utils/graphql'
+import { SUBMIT_INCIDENT_MUTATION, GET_INCIDENT_CUSTOM_FIELDS } from '../../utils/graphql'
 import { ToastMessageContext } from '../../context/toastMessage'
 
 function NewIncidentForm ({ tenantId, tenantName, buttonText, showAsLink = false, size }) {
   const [incidentType, setIncident] = useState('')
   const [lgShow, setLgShow] = useState(false)
+
+  const { loading, data } = useQuery(GET_INCIDENT_CUSTOM_FIELDS)
 
   const { setMessage } = useContext(ToastMessageContext)
 
@@ -64,19 +66,26 @@ function NewIncidentForm ({ tenantId, tenantName, buttonText, showAsLink = false
             }}
             noValidate
           >
-            <Form.Group>
-              <Form.Control
-                as='select'
-                className='mr-sm-2 mb-2'
-                id='incifentTypeSelect'
-                onChange={(event) => setIncident(event.target.value)}
-              >
-                <option value=''>Choose...</option>
-                <option value='Visitor'>Visitor</option>
-                <option value='Repairs'>Repairs</option>
-                <option value='Delivery'>Delivery</option>
-              </Form.Control>
-            </Form.Group>
+            {
+              !loading && data && data.getCustomFields && (
+                <Form.Group>
+                  <Form.Control
+                    as='select'
+                    className='mr-sm-2 mb-2'
+                    id='incidentTypeSelect'
+                    name='customField'
+                    onChange={(event) => setIncident(event.target.value)}
+                  >
+                    <option value=''>Choose...</option>
+                    {data.getCustomFields.map((field, index) => {
+                      return (<option key={index} value={field.fieldName}>{field.fieldName}</option>)
+                    })}
+                  </Form.Control>
+                </Form.Group>
+
+              )
+            }
+
             <Form.Group>
               <Form.Control as='textarea' rows={3} placeholder='Notes...' />
             </Form.Group>

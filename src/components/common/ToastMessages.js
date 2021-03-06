@@ -19,11 +19,11 @@ export default function ToastMessages () {
           minWidth: '19rem'
         }}
       >
-        <Toast show={message.show} onClose={() => setMessage({ message: null, show: false })} delay={5000} autohide>
+        <Toast show={message.show} onClose={() => setMessage({ message: null, show: false })} delay={5000} autohide style={{ backgroundColor: message.isError ? 'rgb(204, 51, 0)' : 'rgb(0, 102, 68)' }}>
           <Toast.Header>
             <strong className='mr-auto'>System</strong>
           </Toast.Header>
-          <Toast.Body className={`text-${message.isError ? 'danger' : 'success'} bold`}>{message.message}</Toast.Body>
+          <Toast.Body className='text-white bold'>{message.message}</Toast.Body>
         </Toast>
       </div>
     </div>
