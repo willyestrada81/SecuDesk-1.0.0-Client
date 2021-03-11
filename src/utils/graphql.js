@@ -122,7 +122,6 @@ mutation (
     organization
     id
     email
-    username
     mustResetPassword
     isAdmin
     createdAt

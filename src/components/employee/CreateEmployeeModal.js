@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 
 import { Button, Modal } from 'react-bootstrap'
 import EmployeeForm from './EmployeeForm'
-import { UPDATE_EMPLOYEE } from '../../utils/graphql'
+import { UPDATE_EMPLOYEE, REGISTER_EMPLOYEE } from '../../utils/graphql'
+import { ToastMessageContext } from '../../context/toastMessage'
 
 export default function CreateEmployeeModal ({
   employeeData,
@@ -15,6 +16,26 @@ export default function CreateEmployeeModal ({
   const [lgShow, setLgShow] = useState(false)
 
   const [employee, setEmployee] = useState({})
+
+  const { setMessage } = useContext(ToastMessageContext)
+
+  const hundleCompleted = () => {
+    setMessage({
+      message: 'Success. Invitation sent',
+      show: true,
+      isError: false
+    })
+    setLgShow(false)
+  }
+
+  const hundleError = (error) => {
+    setMessage({
+      message: `Error. ${error.message}`,
+      show: true,
+      isError: true
+    })
+    setLgShow(false)
+  }
 
   function update (event, field) {
     const fieldName = event ? [event.target.name] : [Object.keys(field)]
@@ -29,15 +50,25 @@ export default function CreateEmployeeModal ({
       RegisterEmployeeInput: employee
     },
     onError (err) {
-      console.log(err.networkError)
+      hundleError(err)
     },
     onCompleted () {
-      setLgShow(false)
+      hundleCompleted()
+    }
+  })
+
+  const [createEmployee] = useMutation(REGISTER_EMPLOYEE, {
+    variables: employee,
+    onError (err) {
+      hundleError(err)
+    },
+    onCompleted () {
+      hundleCompleted()
     }
   })
 
   const submitEmployee = () => {
-    updateEmployee()
+    employeeData ? updateEmployee() : createEmployee()
   }
 
   const handleClose = () => {

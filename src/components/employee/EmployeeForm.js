@@ -16,7 +16,6 @@ export default function EmployeeForm ({
   values,
   submitEmployee
 }) {
-  console.log('NINJARMM ~ file: EmployeeForm.js ~ line 19 ~ employee', !!employeeData)
   const [file, setFile] = useState('')
 
   const [photoUrl, setPhotoUrl] = useState('')
@@ -63,7 +62,6 @@ export default function EmployeeForm ({
                   placeholder='John'
                   name='firstName'
                   defaultValue={employeeData ? employeeData.firstName : ''}
-                  value={values.firstName}
                   readOnly={!!employeeData}
                   onChange={callBack || {}}
                 />
@@ -78,7 +76,6 @@ export default function EmployeeForm ({
                   placeholder='Doe'
                   name='lastName'
                   defaultValue={employeeData ? employeeData.lastName : ''}
-                  value={values.lastName}
                   readOnly={!!employeeData}
                   onChange={callBack || {}}
                 />
@@ -136,7 +133,6 @@ export default function EmployeeForm ({
                   name='email'
                   readOnly={!!employeeData}
                   defaultValue={employeeData ? employeeData.email : ''}
-                  value={values.email}
                   onChange={callBack || {}}
                 />
               </Form.Group>
@@ -152,7 +148,6 @@ export default function EmployeeForm ({
                   placeholder='Address'
                   name='address'
                   defaultValue={employeeData ? employeeData.address : ''}
-                  value={values.address}
                   onChange={callBack || {}}
                 />
               </Form.Group>
@@ -183,7 +178,6 @@ export default function EmployeeForm ({
                   placeholder='City'
                   name='city'
                   defaultValue={employeeData ? employeeData.city : ''}
-                  value={values.city}
                   onChange={callBack || {}}
                 />
               </Form.Group>
@@ -214,6 +208,34 @@ export default function EmployeeForm ({
             </Col>
           </Row>
           <Row>
+            <Col md={4}>
+              <Form.Group>
+                <Form.Label className='color-gray'>Zip Code</Form.Label>
+                <Form.Control
+                  id='zip'
+                  type='text'
+                  name='zip'
+                  defaultValue={employeeData ? employeeData.zip : ''}
+                  readOnly={!!employeeData}
+                  onChange={callBack || {}}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={8}>
+              <Form.Group>
+                <Form.Label className='color-gray'>Organization</Form.Label>
+                <Form.Control
+                  id='organization'
+                  type='text'
+                  name='organization'
+                  defaultValue={employeeData ? employeeData.organization : ''}
+                  readOnly={!!employeeData}
+                  onChange={callBack || {}}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
             <Col>
               <Form.Group>
                 <Form.Label className='color-gray'>Hire Date</Form.Label>
@@ -222,7 +244,6 @@ export default function EmployeeForm ({
                   type='date'
                   name='hireDate'
                   defaultValue={employeeData ? employeeData.hireDate : ''}
-                  value={values.hireDate}
                   readOnly={!!employeeData}
                   onChange={callBack || {}}
                 />
@@ -236,7 +257,6 @@ export default function EmployeeForm ({
                   type='text'
                   name='jobTitle'
                   defaultValue={employeeData ? employeeData.jobTitle : ''}
-                  value={values.jobTitle}
                   readOnly={!!employeeData}
                   onChange={callBack || {}}
                 />
@@ -251,7 +271,6 @@ export default function EmployeeForm ({
                   as='textarea'
                   rows={3}
                   defaultValue={employeeData ? employeeData.bio : ''}
-                  value={values.bio}
                   name='bio'
                   onChange={callBack || {}}
                 />
