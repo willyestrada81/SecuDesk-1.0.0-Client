@@ -1,13 +1,18 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
+import EmployeeStatus from './EmployeeStatus'
 
-function EmployeeSummary ({ employeeData }) {
+function EmployeeSummary ({ employeeData, loggedInUser }) {
   const {
     firstName,
     lastName,
     jobTitle,
-    employeeProfilePhoto, // eslint-disable-line
-    bio
+    employeeProfilePhoto,
+    bio,
+    id,
+    isActivated,
+    status,
+    activationUrl
   } = employeeData
 
   return (
@@ -16,13 +21,20 @@ function EmployeeSummary ({ employeeData }) {
         <div className='mb-3 mx-auto'>
           <img
             className='rounded-circle'
-            src={employeeProfilePhoto} // eslint-disable-line
+            src={employeeProfilePhoto}
             alt={firstName}
             width='110'
           />
         </div>
         <h4 className='mb-0 mt-2'>{`${firstName} ${lastName}`}</h4>
         <span className='text-muted d-block mb-2'>{jobTitle}</span>
+        <EmployeeStatus
+          employeeId={id}
+          isActivated={isActivated}
+          isInactive={status.isInactive}
+          activationUrl={activationUrl}
+          loggedInUser={loggedInUser}
+        />
       </Card.Header>
       <Card.Body>
         <div className='mt-3 text-center'>

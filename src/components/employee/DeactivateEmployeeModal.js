@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 
 import { Button, Form, Modal } from 'react-bootstrap'
+import { AuthContext } from '../../context/auth'
 
 import {
   DEACTIVATE_EMPLOYEE
@@ -9,22 +10,36 @@ import {
 
 export default function DeactivateEmployeeModal ({
   employeeId,
-  handleSuccess
+  handleSuccess,
+  hundleError
 }) {
+  const { user: { id } } = useContext(AuthContext)
   const [lgShow, setLgShow] = useState(false)
   const [email, setEmail] = useState('')
+
+  const sendError = (errors) => {
+    errors.graphQLErrors && errors.graphQLErrors[0]
+      ? hundleError(errors.graphQLErrors[0].extensions.exception.errors.code)
+      : hundleError(errors.message)
+    setEmail('')
+  }
+
+  const sendSuccess = () => {
+    handleSuccess('Success', 'danger', 'Inactive')
+    setEmail('')
+    setLgShow(false)
+  }
 
   const [deactivateEmployee] = useMutation(DEACTIVATE_EMPLOYEE, {
     variables: {
       employeeId,
       employeeEmail: email
     },
-    onError (error) {
-      console.log(error)
+    onError (err) {
+      sendError(err)
     },
-    onCompleted (data) {
-      console.log('NINJARMM ~ file: DeactivateEmployeeModal.js ~ line 26 ~ data', data)
-      handleSuccess('Success', 'danger', 'Inactive')
+    onCompleted () {
+      sendSuccess()
     }
   })
 
@@ -49,11 +64,8 @@ export default function DeactivateEmployeeModal ({
       >
         <Modal.Header closeButton>Deactivate Employee Account</Modal.Header>
         <Modal.Body>
+          <p className='text-warning bold fs-5'>Warning! Deactivating an employee will disable access to the app.</p>
           <Form
-            onSubmit={(e) => {
-              e.preventDefault()
-              deactivateEmployee()
-            }}
             noValidate
           >
             <Form.Group>
@@ -69,11 +81,16 @@ export default function DeactivateEmployeeModal ({
                 required
               />
             </Form.Group>
-            <Form.Group>
-              <Button variant='danger' type='submit' disabled={email.trim() === ''}>
-                Deactivate
-              </Button>
-            </Form.Group>
+            <Button
+              variant='danger'
+              onClick={(e) => {
+                e.preventDefault()
+                deactivateEmployee()
+              }}
+              disabled={email.trim() === ''}
+            >
+              Deactivate
+            </Button>
           </Form>
         </Modal.Body>
         <Modal.Footer>

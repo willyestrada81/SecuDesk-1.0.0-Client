@@ -10,13 +10,14 @@ import PageTitle from '../components/common/PageTitle'
 import EmployeeSummary from '../components/employee/EmployeeSummary'
 import EmployeeAccountDetails from '../components/employee/EmployeeAccountDetails'
 
-function EmployeeAccount () {
-  const { user } = useContext(AuthContext)
+function EmployeeAccount (props) {
+  const employeeId = props.location.state && props.location.state.id
+  const { user: { id } } = useContext(AuthContext)
 
-  if (user) {
+  if (id) {
     const { loading, error, data } = useQuery(GET_EMPLOYEE_BY_ID, {
       variables: {
-        employeeId: user.id
+        employeeId: employeeId || id
       }
     })
 

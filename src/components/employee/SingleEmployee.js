@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import { Image, Dropdown } from 'react-bootstrap'
-import AccountInvitationModal from './AccountInvitationModal'
+import ResetPasswordConfirmationModal from './ResetPasswordConfirmationModal'
 import EmployeeStatus from './EmployeeStatus'
 
 export default function SingleEmployee ({ employee }) {
@@ -31,12 +31,6 @@ export default function SingleEmployee ({ employee }) {
     }
   } = employee
 
-  const getActivationUrl = () => {
-    return (typeof window !== 'undefined')
-      ? window.location.protocol + '//' + window.location.host + activationUrl
-      : activationUrl
-  }
-
   return (
     <tbody
       key={id}
@@ -53,7 +47,10 @@ export default function SingleEmployee ({ employee }) {
         <td>
           <Link
             to={{
-              pathname: ''
+              pathname: '/user-profile',
+              state: {
+                id
+              }
             }}
           >
             {firstName}
@@ -83,12 +80,8 @@ export default function SingleEmployee ({ employee }) {
               </span>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <AccountInvitationModal
-                buttonText='Copy Invitation URL'
-                title='Copy Invitation URL'
-                size='sm'
-                variant='link'
-                activationUrl={getActivationUrl()}
+              <ResetPasswordConfirmationModal
+                employeeId={id} employeeName={`${firstName} ${lastName}`}
               />
             </Dropdown.Menu>
           </Dropdown>

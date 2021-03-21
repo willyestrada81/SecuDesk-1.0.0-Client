@@ -177,8 +177,30 @@ mutation resetPassword($email: String!, $password: String!, $confirmPassword: St
 
 export const DEACTIVATE_EMPLOYEE = gql`
 mutation deactivateEmployee($employeeId: ID!, $employeeEmail: String!) {
-  deactivateEmployee(employeeId: $employeeId, employeeEmail: $employeeEmail){
+  deactivateEmployee(employeeId: $employeeId, employeeEmail: $employeeEmail) {
     id
+    firstName
+    lastName
+    organization
+    email
+    mustResetPassword
+    isAdmin
+    createdAt
+    gender
+    hireDate
+    bio
+    jobTitle
+    address
+    city
+    state
+    zip
+    employeeProfilePhoto
+    activationUrl
+    isActivated
+    status {
+    isInactive
+    deactivatedBy
+    }
   }
 }`
 

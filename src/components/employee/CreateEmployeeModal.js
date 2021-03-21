@@ -19,7 +19,7 @@ export default function CreateEmployeeModal ({
 
   const { setMessage } = useContext(ToastMessageContext)
 
-  const hundleCompleted = () => {
+  const handleCompleted = () => {
     setMessage({
       message: 'Success. Invitation sent',
       show: true,
@@ -28,7 +28,7 @@ export default function CreateEmployeeModal ({
     setLgShow(false)
   }
 
-  const hundleError = (error) => {
+  const handleError = (error) => {
     setMessage({
       message: `Error. ${error.message}`,
       show: true,
@@ -50,20 +50,20 @@ export default function CreateEmployeeModal ({
       RegisterEmployeeInput: employee
     },
     onError (err) {
-      hundleError(err)
+      handleError(err)
     },
     onCompleted () {
-      hundleCompleted()
+      handleCompleted()
     }
   })
 
   const [createEmployee] = useMutation(REGISTER_EMPLOYEE, {
     variables: employee,
     onError (err) {
-      hundleError(err)
+      handleError(err)
     },
     onCompleted () {
-      hundleCompleted()
+      handleCompleted()
     }
   })
 

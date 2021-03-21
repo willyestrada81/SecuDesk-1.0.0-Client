@@ -5,12 +5,15 @@ import { ToastMessageContext } from '../../context/toastMessage'
 import AccountInvitationModal from './AccountInvitationModal'
 import DeactivateEmployeeModal from './DeactivateEmployeeModal'
 
+import { AuthContext } from '../../context/auth'
+
 export default function EmployeeStatus ({
   employeeId,
   isActivated,
   isInactive,
   activationUrl
 }) {
+  const { user: { id } } = useContext(AuthContext)
   const { setMessage } = useContext(ToastMessageContext)
 
   const [buttonProps, setButtonProps] = useState({
@@ -19,7 +22,7 @@ export default function EmployeeStatus ({
       : isActivated
         ? 'success'
         : 'warning',
-    title: isActivated
+    title: isActivated && !isInactive
       ? 'Active'
       : isInactive
         ? 'Inactive'
@@ -41,6 +44,14 @@ export default function EmployeeStatus ({
     setButtonProps({
       variant,
       title
+    })
+  }
+
+  const hundleError = (error) => {
+    setMessage({
+      message: `Error. ${error || error.message}`,
+      show: true,
+      isError: true
     })
   }
 
@@ -72,9 +83,10 @@ export default function EmployeeStatus ({
         title={buttonProps.title}
         size='sm'
         drop='right'
+        disabled={id === employeeId}
       >
         <Dropdown.Item eventKey='1' className='text-danger'>
-          <DeactivateEmployeeModal employeeId={employeeId} handleSuccess={handleSuccess} />
+          <DeactivateEmployeeModal employeeId={employeeId} handleSuccess={handleSuccess} hundleError={hundleError} />
         </Dropdown.Item>
       </DropdownButton>
     )
