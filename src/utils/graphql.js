@@ -84,60 +84,6 @@ export const GET_SYSTEM_ACTIVITIES = gql`
 }
 `
 
-export const REGISTER_EMPLOYEE = gql`
-mutation (
-    $firstName: String!
-    $lastName: String!
-    $organization: String!
-    $email: String!
-    $gender: String
-    $hireDate: String!
-    $bio: String
-    $jobTitle: String!
-    $address: String!
-    $city: String!
-    $state: String!
-    $zip: String!
-    $employeeProfilePhoto: String
-) {
-  registerEmployee(
-    RegisterEmployeeInput: {
-      firstName: $firstName
-      lastName: $lastName
-      organization: $organization
-      email: $email
-      gender: $gender
-      hireDate: $hireDate
-      bio: $bio
-      jobTitle: $jobTitle
-      address: $address
-      city: $city
-      state: $state
-      zip: $zip
-      employeeProfilePhoto: $employeeProfilePhoto
-    }
-  ) {
-    firstName
-    lastName
-    organization
-    id
-    email
-    mustResetPassword
-    isAdmin
-    createdAt
-    gender
-    hireDate
-    bio
-    jobTitle
-    address
-    city
-    state
-    zip
-    employeeProfilePhoto
-  }
-}
-`
-
 export const CREATE_TENANT = gql`
   mutation(
     $tenantFirstName: String!
@@ -193,20 +139,6 @@ export const CREATE_TENANT = gql`
     }
   }
 `
-export const LOGIN_USER = gql`
-mutation login($email: String!, $password: String!) {
-  login(email: $email, password: $password) {
-    id
-    email
-    firstName
-    createdAt
-    token
-    isAdmin
-    isSuperAdmin
-    employeeProfilePhoto
-  }
-}
-`
 
 export const GET_TENANT_BY_ID = gql`
 query getTenantById($tenantId: ID!) {
@@ -242,59 +174,6 @@ query getTenantById($tenantId: ID!) {
     incidentCount
   }
 }
-`
-
-export const GET_EMPLOYEE_BY_ID = gql`
-query getEemployeeById($employeeId: ID!) {
-  getEmployeeById(employeeId: $employeeId){
-    firstName
-    lastName
-    organization
-    id
-    email
-    isAdmin
-    gender
-    hireDate
-    bio
-    jobTitle
-    address
-    city
-    state
-    zip
-    employeeProfilePhoto
-    mustResetPassword
-  }
-}
-`
-
-export const UPDATE_EMPLOYEE = gql`
-  mutation updateEmployee(
-    $employeeId: ID!
-    $RegisterEmployeeInput: RegisterEmployeeInput!
-  ) {
-    updateEmployee(
-      employeeId: $employeeId
-      RegisterEmployeeInput: $RegisterEmployeeInput
-    ) {
-      firstName
-      lastName
-      organization
-      id
-      email
-      isAdmin
-      isSuperAdmin
-      gender
-      hireDate
-      bio
-      jobTitle
-      address
-      city
-      state
-      zip
-      employeeProfilePhoto
-      mustResetPassword
-    }
-  }
 `
 
 export const CREATE_VISITOR_LOG = gql`
@@ -433,34 +312,6 @@ mutation searchVisitors($filter: String!) {
       employeeId
       tenantId
     }
-  }
-}`
-
-export const ACTIVATE_EMPLOYEE = gql`
-mutation activateEmployee($activationCode: String!, $email: String!) {
-  activateEmployee(activationCode: $activationCode, email: $email)
-}`
-
-export const RESET_PASSWORD = gql`
-mutation resetPassword($email: String!, $password: String!, $confirmPassword: String!) {
-  resetPassword(email: $email, password: $password, confirmPassword: $confirmPassword) {
-    firstName
-    lastName
-    organization
-    id
-    email
-    isAdmin
-    isSuperAdmin
-    gender
-    hireDate
-    bio
-    jobTitle
-    address
-    city
-    state
-    zip
-    employeeProfilePhoto
-    mustResetPassword
   }
 }`
 

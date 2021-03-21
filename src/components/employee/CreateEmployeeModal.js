@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/react-hooks'
 
 import { Button, Modal } from 'react-bootstrap'
 import EmployeeForm from './EmployeeForm'
-import { UPDATE_EMPLOYEE, REGISTER_EMPLOYEE } from '../../utils/graphql'
+import { UPDATE_EMPLOYEE, REGISTER_EMPLOYEE } from '../../utils/querries/employees'
 import { ToastMessageContext } from '../../context/toastMessage'
 
 export default function CreateEmployeeModal ({

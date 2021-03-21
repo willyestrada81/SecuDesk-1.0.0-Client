@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 
 import { Container, Row, Col } from 'react-bootstrap'
 
-import { GET_EMPLOYEE_BY_ID } from '../utils/graphql'
+import { GET_EMPLOYEE_BY_ID } from '../utils/querries/employees'
 import { AuthContext } from '../context/auth'
 import PageTitle from '../components/common/PageTitle'
 import EmployeeSummary from '../components/employee/EmployeeSummary'

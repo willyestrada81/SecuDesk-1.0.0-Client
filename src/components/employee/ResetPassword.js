@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/react-hooks'
 import { Form, Button, Col, Image } from 'react-bootstrap'
 import { useForm } from '../../utils/hooks'
 
-import { RESET_PASSWORD } from '../../utils/graphql'
+import { RESET_PASSWORD } from '../../utils/querries/employees'
 
 export default function ResetPassword ({ title }) {
   const history = useHistory()

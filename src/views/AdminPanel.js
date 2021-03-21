@@ -1,13 +1,15 @@
 import React, { useContext } from 'react'
 import { Redirect } from 'react-router'
-import { Container, Row, Col, Card } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+
+import { Container, Row, Col, Button } from 'react-bootstrap'
 import { AuthContext } from '../context/auth'
 import PageTitle from '../components/common/PageTitle'
 import CreateEmployeeModal from '../components/employee/CreateEmployeeModal'
-import OpenModal from '../components/common/OpenModal'
 import IncidentCustomFieldForm from '../components/incidents/IncidentCustomFieldForm'
+import CustomCard from '../components/common/CustomCard'
 
-export default function AdminPanel () {
+export default function AdminPanel() {
   const { user } = useContext(AuthContext)
   if (user && user.isSuperAdmin) {
     return (
@@ -25,30 +27,40 @@ export default function AdminPanel () {
           <Col md={8}>
             <Row>
               <Col>
-                <Card className='mb-4'>
-                  <Card.Body className='p-0 pb-3'>
-                    <h5 className='text-primary'>Create new Employee</h5>
-                    <p className='text-secondary text-md'>Create a new Employee. An email will be sent to the employee's email to activate account.</p>
-                    <CreateEmployeeModal title='Create Employee' variant='primary' size='md' />
-                  </Card.Body>
-                </Card>
+                <CustomCard
+                  cardClass='mb-4'
+                  cardBodyClass='p-0 pb-3'
+                  component={<CreateEmployeeModal title='Create Employee' variant='primary' size='md' />}
+                  title='Create new Employee'
+                  content={'Create a new Employee. An email will be sent to the employee\'s email to activate account.'}
+                />
               </Col>
               <Col>
-                <Card className='mb-4'>
-                  <Card.Body className='p-0 pb-3'>
-                    <h5 className='text-primary'>Create Incident Custom Field</h5>
-                    <p className='text-secondary text-md'>Create a custom field that will be used for incidents. "Repairs" is the default. You can add as many as you'd like.</p>
-                    <IncidentCustomFieldForm />
-                  </Card.Body>
-                </Card>
+                <CustomCard
+                  cardClass='mb-4'
+                  cardBodyClass='p-0 pb-3'
+                  component={<IncidentCustomFieldForm />}
+                  title='Create Incident Custom Field'
+                  content={'Create a custom field that will be used for incidents. "Repairs" is the default. You can add as many as you\'d like.'}
+                />
               </Col>
             </Row>
             <Row>
               <Col>
-                {}
+                <CustomCard
+                  cardClass='mb-4'
+                  cardBodyClass='p-0 pb-3'
+                  component={
+                    <Link variant='primary' to='/manage-employees'>
+                      <Button>Manage Employees</Button>
+                    </Link>
+                    }
+                  title='Manage Employees'
+                  content={'Reset Employees\' Passwords. Copy Invitation Link. Deactivate Employee.'}
+                />
               </Col>
               <Col>
-                {}
+                { }
               </Col>
             </Row>
           </Col>

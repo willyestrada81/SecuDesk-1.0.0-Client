@@ -21,6 +21,7 @@ import EmployeeAccount from './views/EmployeeAccount'
 import ToastMessages from './components/common/ToastMessages'
 import Packages from './views/Packages'
 import AdminPanel from './views/AdminPanel'
+import ManageEmployees from './views/ManageEmployees'
 
 function App () {
   return (
@@ -41,6 +42,7 @@ function App () {
           <Route exact path='/error' component={Errors} />
           <Route exact path='/search-result' component={TenantsSearchResult} />
           <Route exact path='/admin-panel' component={AdminPanel} />
+          <Route exact path='/manage-employees' component={ManageEmployees} />
           <AuthRoute exact path='/activate-user/:activationCode' component={Login} />
           <AuthRoute exact path='/accounts/:resetPassword' component={Login} />
         </ToastMessageProvider>

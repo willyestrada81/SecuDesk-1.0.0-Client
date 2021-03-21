@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/react-hooks'
 import { Form, Button, Col, Image, Row } from 'react-bootstrap'
 import { useForm } from '../../utils/hooks'
 
-import { ACTIVATE_EMPLOYEE } from '../../utils/graphql'
+import { ACTIVATE_EMPLOYEE } from '../../utils/querries/employees'
 
 export default function ActivateUser ({ activationCode }) {
   const [errors, setErrors] = useState({})

@@ -6,7 +6,7 @@ import { Form, Button, Col, Image } from 'react-bootstrap'
 import { AuthContext } from '../../context/auth'
 import { useForm } from '../../utils/hooks'
 
-import { LOGIN_USER } from '../../utils/graphql'
+import { LOGIN_USER } from '../../utils/querries/employees'
 
 export default function LoginForm () {
   const context = useContext(AuthContext)
