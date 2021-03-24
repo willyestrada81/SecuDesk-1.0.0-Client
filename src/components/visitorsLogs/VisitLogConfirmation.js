@@ -6,7 +6,7 @@ import moment from 'moment'
 import { LOG_VISIT } from '../../utils/graphql'
 import { ToastMessageContext } from '../../context/toastMessage'
 
-export default function VisitLogConfirmation ({ tenantId, visitorId, tenantName, visitorName, setModalMessage, variant, size }) {
+export default function VisitLogConfirmation ({ tenantId, visitorId, tenantName, visitorName, setModalMessage, variant, size, btnText }) {
   const [show, setShow] = useState(false)
 
   const { setMessage } = useContext(ToastMessageContext)
@@ -62,7 +62,7 @@ export default function VisitLogConfirmation ({ tenantId, visitorId, tenantName,
   return (
     <>
       <Button variant={variant} onClick={handleShow} size={size}>
-        Log new visit for {visitorName}
+        {btnText}
       </Button>
 
       <Modal

@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { useQuery } from '@apollo/react-hooks'
+import { Button, Modal, Spinner } from 'react-bootstrap'
+
+import { GET_VISITORS_BY_TENANT_ID } from '../../utils/graphql'
 
 import SearchVisitors from './SearchVisitors'
 import VisitLogConfirmation from './VisitLogConfirmation'
@@ -22,6 +25,12 @@ export default function NewVisitLogForm ({ tenantId, tenantName, buttonText, siz
     setLgShow(false)
   }
 
+  const { loading, data } = useQuery(GET_VISITORS_BY_TENANT_ID, {
+    variables: {
+      tenantId
+    }
+  })
+
   return (
     <>
       <Button variant={variant} size={size} onClick={() => setLgShow(true)}>{buttonText}</Button>
@@ -33,7 +42,33 @@ export default function NewVisitLogForm ({ tenantId, tenantName, buttonText, siz
       >
         <Modal.Header closeButton>Log new visit for {tenantName}</Modal.Header>
         <Modal.Body>
-          <Modal.Title className='mb-4'>{`Who is visiting ${tenantName}? Search for visitor: `} <br />If no visitor found, add one. </Modal.Title>
+          <Modal.Title className='mb-4'>{`Recent visitors for ${tenantName} `}</Modal.Title>
+          {loading && (
+            <Spinner
+              as='span'
+              animation='border'
+              size='sm'
+              role='status'
+              aria-hidden='true'
+            />)}
+          {
+            !loading && data.getVisitorsByTenantId.map((visitor, index) => {
+              return (
+                <span key={index} className='mr-2'>
+                  <VisitLogConfirmation
+                    tenantId={tenantId}
+                    visitorId={visitor.id}
+                    tenantName={tenantName}
+                    visitorName={visitor.visitorName}
+                    setModalMessage={setModalMessage}
+                    variant='info'
+                    btnText={`${visitor.visitorName} ${visitor.visitorLastName}`}
+                  />
+                </span>
+              )
+            })
+          }
+          <Modal.Title className='mt-2'>Search or add a new visitor. </Modal.Title>
           <SearchVisitors setSearchResult={setSearchResult} />
           {searchResult.searchVisitors && Object.values(searchResult)[0].length > 0
             ? (
@@ -48,7 +83,8 @@ export default function NewVisitLogForm ({ tenantId, tenantName, buttonText, siz
                       tenantName={tenantName}
                       visitorName={visitor.visitorName}
                       setModalMessage={setModalMessage}
-                      variant='primary'
+                      variant='info'
+                      btnText={`Log visit for ${visitor.visitorName}`}
                     />
                   )
                 })}

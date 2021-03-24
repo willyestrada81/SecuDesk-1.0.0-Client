@@ -84,6 +84,7 @@ export default function VisitorsLogs ({
                         variant='link'
                         visitorName={visitorName}
                         sise='sm'
+                        btnText={`Log visit for ${visitorName}`}
                       />
                     </td>
                     <td>{notes}</td>

@@ -1,8 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 
 import { Button, Form, Modal } from 'react-bootstrap'
-import { AuthContext } from '../../context/auth'
 
 import {
   DEACTIVATE_EMPLOYEE
@@ -13,7 +12,6 @@ export default function DeactivateEmployeeModal ({
   handleSuccess,
   hundleError
 }) {
-  const { user: { id } } = useContext(AuthContext)
   const [lgShow, setLgShow] = useState(false)
   const [email, setEmail] = useState('')
 
@@ -47,6 +45,12 @@ export default function DeactivateEmployeeModal ({
     setEmail('')
     setLgShow(false)
   }
+
+  function validateEmail (email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    return re.test(String(email).toLowerCase())
+  }
+
   return (
     <>
       <Button
@@ -87,7 +91,7 @@ export default function DeactivateEmployeeModal ({
                 e.preventDefault()
                 deactivateEmployee()
               }}
-              disabled={email.trim() === ''}
+              disabled={!validateEmail(email)}
             >
               Deactivate
             </Button>

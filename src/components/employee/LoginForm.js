@@ -17,7 +17,7 @@ export default function LoginForm () {
     password: ''
   })
 
-  const [loginUser] = useMutation(LOGIN_USER, {
+  const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update (_, { data: { login } }) {
       context.login(login)
     },
@@ -75,8 +75,9 @@ export default function LoginForm () {
             type='submit'
             block
             className='my-3'
+            disabled={loading}
           >
-            Login
+            {loading ? 'Loading...' : 'Login'}
           </Button>
         </Col>
       </Form.Row>
