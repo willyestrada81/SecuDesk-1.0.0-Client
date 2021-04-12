@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../context/auth'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import { Image, Container, Row, Col, Card, Button } from 'react-bootstrap'
 import { useQuery } from '@apollo/react-hooks'

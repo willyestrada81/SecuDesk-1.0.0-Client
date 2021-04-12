@@ -43,14 +43,8 @@ function Dashboard () {
             incidentsBeforeLastHour,
             incidentsLast24Hours,
             incidentsBeforeLast24Hours,
-            delivery,
-            visitor,
-            repairs,
             percentageOfIncreaseByHour,
-            percentageOfIncreaseBy24Hours,
-            percentageDelivery,
-            percentageVisitor,
-            percentageRepairs
+            percentageOfIncreaseBy24Hours
           } = logs
 
           return (
@@ -92,7 +86,7 @@ function Dashboard () {
                         <Col xl={6}>
                           <StatsCard
                             stats={{
-                              name: 'Last Hour',
+                              name: 'Incidents Last Hour',
                               statNumber: incidentsLastHour.length,
                               percentage: percentageOfIncreaseByHour,
                               since: 'Since last hour'
@@ -100,7 +94,7 @@ function Dashboard () {
                           />
                           <StatsCard
                             stats={{
-                              name: 'Today',
+                              name: 'Incidents Today',
                               statNumber: incidentsLast24Hours.length,
                               percentage: percentageOfIncreaseBy24Hours,
                               since: 'Since yesterday'
@@ -110,18 +104,18 @@ function Dashboard () {
                         <Col xl={6}>
                           <StatsCard
                             stats={{
-                              name: 'Last Hour',
-                              statNumber: incidentsLastHour.length,
-                              percentage: percentageOfIncreaseByHour,
+                              name: 'Packages Last Hour',
+                              statNumber: incidentsBeforeLastHour.length,
+                              percentage: incidentsBeforeLast24Hours,
                               since: 'Since last hour'
                             }}
                           />
                           <StatsCard
                             stats={{
-                              name: 'Last Hour',
+                              name: 'Packages Today',
                               statNumber: incidentsLastHour.length,
                               percentage: percentageOfIncreaseByHour,
-                              since: 'Since last hour'
+                              since: 'Since yesterday'
                             }}
                           />
                         </Col>
@@ -130,20 +124,10 @@ function Dashboard () {
                   </Row>
                   <Row className='mt-2'>
                     <Col xl={8}>
-                      <IncidentsOverview
-                        logs={[...visitor, ...repairs, ...delivery]}
-                      />
+                      <IncidentsOverview />
                     </Col>
                     <Col xl={4}>
-                      <IncidentsByType
-                        chartData={{
-                          title: 'Incidents By Types',
-                          visitors: percentageVisitor,
-                          deliveries: percentageDelivery,
-                          repairs: percentageRepairs
-                        }}
-                        fullReport=''
-                      />
+                      <IncidentsByType />
                     </Col>
                   </Row>
                 </Col>

@@ -1,17 +1,32 @@
 import React from 'react'
-import { Card, Row, Col, Button } from 'react-bootstrap'
+import { useQuery } from '@apollo/react-hooks'
+import { Card, Spinner } from 'react-bootstrap'
 import moment from 'moment'
+import { FETCH_LOGS_QUERY } from '../../utils/graphql'
 
-import RangeDatePicker from '../common/RangeDatePicker'
+// import RangeDatePicker from '../common/RangeDatePicker'
 
-export default function IncidentsOverview ({ logs }) {
+export default function IncidentsOverview () {
+  const { loading, data } = useQuery(FETCH_LOGS_QUERY, {
+    pollInterval: 10000,
+    onError (err) {
+      console.log(err)
+    }
+  })
+  if (!loading && !data) {
+    return (
+      <Spinner animation='border' role='status' className='mb-4'>
+        <span className='sr-only'>Loading...</span>
+      </Spinner>
+    )
+  }
   return (
     <Card className='h-100'>
       <Card.Header className='border-bottom'>
-        <h6 className='m-0'>Latest Incidents</h6>
+        <h5 className='m-0'>Latest Incidents</h5>
       </Card.Header>
       <Card.Body className='pt-0'>
-        <Row className='border-bottom py-2 bg-light'>
+        {/* <Row className='border-bottom py-2 bg-light'>
           <Col sm='6' className='d-flex mb-2 mb-sm-0'>
             <RangeDatePicker />
           </Col>
@@ -23,13 +38,10 @@ export default function IncidentsOverview ({ logs }) {
               View Full Report &rarr;
             </Button>
           </Col>
-        </Row>
+        </Row> */}
         <table className='table mb-0'>
           <thead className='bg-light'>
             <tr>
-              <th scope='col' className='border-0'>
-                #
-              </th>
               <th scope='col' className='border-0'>
                 Incident Type
               </th>
@@ -41,13 +53,12 @@ export default function IncidentsOverview ({ logs }) {
               </th>
             </tr>
           </thead>
-          {logs.length
-            ? (logs.slice(0, 7).map((log, index) => {
+          {!loading && data.getIncidentLogs
+            ? (data.getIncidentLogs.slice(0, 7).map((log, index) => {
                 const { id, incidentType, createdAt, createdBy } = log
                 return (
                   <tbody key={id}>
                     <tr>
-                      <td>{(index + 1).toString()}</td>
                       <td>{incidentType}</td>
                       <td>{moment(createdAt).format('LLL')}</td>
                       <td>{createdBy}</td>

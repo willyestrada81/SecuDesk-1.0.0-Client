@@ -1,24 +1,65 @@
 import React from 'react'
+import { useQuery } from '@apollo/react-hooks'
 import { Pie } from 'react-chartjs-2'
-import PropTypes from 'prop-types'
-import { Row, Col, Card } from 'react-bootstrap'
-export default function IncidentsByType ({ chartData, fullReport }) {
+import moment from 'moment'
+
+import { Card } from 'react-bootstrap'
+
+import { GET_INCIDENT_CUSTOM_FIELDS, FETCH_LOGS_QUERY } from '../../utils/graphql'
+
+export default function IncidentsByType () {
+  const { loading, data } = useQuery(GET_INCIDENT_CUSTOM_FIELDS)
+  const { loading: logsLoading, data: logsData } = useQuery(FETCH_LOGS_QUERY, {
+    pollInterval: 10000,
+    onError (err) {
+      console.log(err)
+    }
+  })
+
+  let customFields
+
+  const incidentsByType = []
+
+  if (!loading && data && data.getCustomFields && !logsLoading && logsData) {
+    customFields = data.getCustomFields.map(field => field.fieldName)
+
+    const incidentsLastDay = logsData.getIncidentLogs.filter(d => moment(d.createdAt).isAfter(moment().startOf('day')))
+
+    const total = []
+
+    for (let i = 0; i < customFields.length; i++) {
+      const item = incidentsLastDay.filter(d => d.incidentType === customFields[i])
+      total.push(item.length)
+    }
+
+    const totals = total.reduce((a, b) => a + b, 0)
+
+    for (let i = 0; i < customFields.length; i++) {
+      const item = incidentsLastDay.filter(d => d.incidentType === customFields[i])
+      incidentsByType[i] = item.length === 0 ? 0 : ((item.length / totals) * 100).toFixed(2)
+    }
+  }
+
   const state = {
-    labels: ['Repairs', 'Visitors', 'Deliveries'],
+    labels: customFields,
     datasets: [
       {
         label: 'Incidents By Type',
         backgroundColor: [
-          'rgba(0,123,255,0.9)',
-          'rgb(77, 163, 255)',
-          'rgb(153, 202, 255)'
+          'rgb(0, 62, 128)',
+          'rgb(0, 86, 179)',
+          'rgb(0, 111, 230)',
+          'rgb(26, 136, 255)',
+          'rgb(77, 163, 255)'
         ],
         hoverBackgroundColor: [
+          'rgb(77, 163, 255)',
+          'rgb(26, 136, 255)',
           'rgb(0, 111, 230)',
-          'rgb(0, 111, 230)',
+          'rgb(0, 86, 179)',
           'rgb(0, 62, 128)'
         ],
-        data: [chartData.repairs, chartData.visitors, chartData.deliveries]
+        data: incidentsByType
       }
     ]
   }
@@ -29,7 +70,7 @@ export default function IncidentsByType ({ chartData, fullReport }) {
         <h5 className='m-0'>Incident By Types</h5>
       </Card.Header>
       <Card.Body className='d-flex py-0'>
-        {(chartData.repairs === 0 && chartData.visitors === 0 && chartData.deliveries === 0)
+        {(!incidentsByType.length)
           ? (<strong className='text-muted d-block m-2'>No data history to display</strong>)
           : (
             <Pie
@@ -50,40 +91,7 @@ export default function IncidentsByType ({ chartData, fullReport }) {
             />
             )}
       </Card.Body>
-      <Card.Footer className='border-top mt-2'>
-        <Row>
-          <Col />
-          <Col className='text-right view-report'>
-            {/* eslint-disable-next-line */}
-            <a href="#">View full report &rarr;</a>
-          </Col>
-        </Row>
-      </Card.Footer>
+      <Card.Footer className='border-top mt-2' />
     </Card>
   )
-}
-
-IncidentsByType.propTypes = {
-  /**
-   * The component's title.
-   */
-  title: PropTypes.string,
-  /**
-   * The chart config object.
-   */
-  chartConfig: PropTypes.object,
-  /**
-   * The Chart.js options.
-   */
-  chartOptions: PropTypes.object,
-  /**
-   * The chart data.
-   */
-  chartData: PropTypes.object
-}
-
-IncidentsByType.defaultProps = {
-  /**
-   * Default data.
-   */
 }

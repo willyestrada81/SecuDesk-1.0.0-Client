@@ -11,7 +11,7 @@ export default function StatsCard ({
           <span className='text-danger mr-2'>
             <i className='fa fa-arrow-down' /> {`${percentage || '0'}%`}
           </span>{' '}
-          <span className='text-nowrap'>{percentage === null ? 'No data last hour t compare' : since}</span>
+          <span className='text-nowrap'>{percentage === null ? 'No data to compare' : since}</span>
         </p>
       )
     } else {
@@ -20,7 +20,7 @@ export default function StatsCard ({
           <span className='text-success mr-2'>
             <i className='fa fa-arrow-up' /> {`${percentage || '0'}%`}
           </span>{' '}
-          <span className='text-nowrap'>{percentage === null ? 'No data last hour to compare' : since}</span>
+          <span className='text-nowrap'>{percentage === null ? 'No data to compare' : since}</span>
         </p>
       )
     }

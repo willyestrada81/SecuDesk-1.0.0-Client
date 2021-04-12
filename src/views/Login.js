@@ -7,6 +7,7 @@ import ActivateUser from '../components/employee/ActivateUser'
 
 function Login (props) {
   const title = props.location.state ? props.location.state.title : 'Reset Password'
+
   const getForm = () => {
     if (props.match.params.activationCode) {
       const activationCode = props.match.params.activationCode

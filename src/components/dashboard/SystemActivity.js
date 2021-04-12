@@ -22,7 +22,7 @@ export default function SystemActivity () {
       .slice()
       .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
 
-    const sorted = sortedActivities.slice(0, 10).map((activity) => {
+    const sorted = sortedActivities.slice(0, 12).map((activity) => {
       return (
         <div item={activity} key={activity.id}>
           <div className='mb-2'>

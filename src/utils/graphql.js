@@ -232,32 +232,8 @@ export const FETCH_DASHBOARD = gql`
       createdAt
       createdBy
     }
-    delivery {
-      id
-      tenant
-      incidentType
-      createdAt
-      createdBy
-    }
-    visitor {
-      id
-      tenant
-      incidentType
-      createdAt
-      createdBy
-    }
-    repairs {
-      id
-      tenant
-      incidentType
-      createdAt
-      createdBy
-    }
     percentageOfIncreaseByHour
     percentageOfIncreaseBy24Hours
-    percentageDelivery
-    percentageVisitor
-    percentageRepairs
   }
 }
 `
